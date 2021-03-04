@@ -76,27 +76,11 @@ namespace JustSaying.Sample.Restaurant.KitchenConsole
 
                         config.Subscriptions(x =>
                         {
-                            x.WithSubscriptionGroup("GroupA",
-                                c => c.WithPrefetch(10)
-                                    .WithMultiplexerCapacity(10)
-                                    .WithConcurrencyLimit(5));
+                            // Existing mode
+                            // x.ForTopic<OrderPlacedEvent>();
 
-                            // Creates the following if they do not already exist
-                            //  - a SQS queue of name `orderplacedevent`
-                            //  - a SQS queue of name `orderplacedevent_error`
-                            //  - a SNS topic of name `orderplacedevent`
-                            //  - a SNS topic subscription on topic 'orderplacedevent' and queue 'orderplacedevent' with two tags
-                            //      - "IsOrderEvent" with no value
-                            //      - "Subscriber" with the value "KitchenConsole"
-                            //  - a SNS topic subscription on topic 'orderonitswayevent' and queue 'orderonitswayevent'
-                            x.ForTopic<OrderPlacedEvent>(cfg =>
-                                cfg.WithTag("IsOrderEvent")
-                                    .WithTag("Subscriber", nameof(KitchenConsole))
-                                    .WithReadConfiguration(rc  =>
-                                        rc.WithSubscriptionGroup("GroupA")));
-                            x.ForTopic<OrderOnItsWayEvent>(cfg =>
-                                cfg.WithReadConfiguration(rc =>
-                                    rc.WithSubscriptionGroup("GroupB")));
+                            // New alternative
+                            x.ForQueueUrl<OrderPlacedEvent>("https://myqueue");
                         });
 
                         config.Publications(x =>

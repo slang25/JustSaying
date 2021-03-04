@@ -192,7 +192,7 @@ namespace JustSaying.AwsTools.MessageHandling
             {
                 Arn,
                 QueueName,
-                Region = Region.SystemName,
+                Region = RegionSystemName,
                 Policy,
                 Uri,
                 DeliveryDelay,

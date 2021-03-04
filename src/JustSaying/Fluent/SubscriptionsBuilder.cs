@@ -123,6 +123,26 @@ namespace JustSaying.Fluent
             return ForTopic<T>((p) => p.IntoDefaultTopic());
         }
 
+        public SubscriptionsBuilder ForQueueUrl<T>(string queueUrl)
+            where T : Message
+        {
+            return ForQueueUrl<T>(queueUrl, _ => { });
+        }
+
+        public SubscriptionsBuilder ForQueueUrl<T>(string queueUrl, Action<AttachedQueueSubscriptionBuilder<T>> configure)
+            where T : Message
+        {
+            if (queueUrl == null) throw new ArgumentNullException(nameof(queueUrl));
+
+            var builder = new AttachedQueueSubscriptionBuilder<T>(queueUrl);
+
+            configure(builder);
+
+            Subscriptions.Add(builder);
+
+            return this;
+        }
+
         /// <summary>
         /// Configures a topic subscription for the specified topic name.
         /// </summary>

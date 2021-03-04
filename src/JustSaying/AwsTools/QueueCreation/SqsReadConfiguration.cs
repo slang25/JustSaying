@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using JustSaying.Messaging.MessageProcessingStrategies;
 using JustSaying.Messaging.Middleware;
 using JustSaying.Naming;
 
@@ -8,23 +7,22 @@ namespace JustSaying.AwsTools.QueueCreation
 {
     public class SqsReadConfiguration : SqsBasicConfiguration
     {
+        private readonly SubscriptionType _subscriptionType;
+
         public SqsReadConfiguration(SubscriptionType subscriptionType)
         {
-            SubscriptionType = subscriptionType;
+            _subscriptionType = subscriptionType;
             MessageRetention = JustSayingConstants.DefaultRetentionPeriod;
             ErrorQueueRetentionPeriod = JustSayingConstants.MaximumRetentionPeriod;
             VisibilityTimeout = JustSayingConstants.DefaultVisibilityTimeout;
             RetryCountBeforeSendingToErrorQueue = JustSayingConstants.DefaultHandlerRetryCount;
         }
 
-        public SubscriptionType SubscriptionType { get; private set; }
-
         public string TopicName { get; set; }
         public string PublishEndpoint { get; set; }
         public Dictionary<string, string> Tags { get; set; }
 
         public string TopicSourceAccount { get; set; }
-        public IMessageBackoffStrategy MessageBackoffStrategy { get; set; }
         public string FilterPolicy { get; set; }
         public string SubscriptionGroupName { get; set; }
         public Action<HandlerMiddlewareBuilder> MiddlewareConfiguration { get; set; }
@@ -36,7 +34,7 @@ namespace JustSaying.AwsTools.QueueCreation
 
         protected override void OnValidating()
         {
-            if (SubscriptionType == SubscriptionType.ToTopic)
+            if (_subscriptionType == SubscriptionType.ToTopic)
             {
                 if (string.IsNullOrWhiteSpace(TopicName))
                 {
