@@ -13,11 +13,12 @@ namespace JustSaying.Fluent
     public sealed class AttachedQueueSubscriptionBuilder<T> : ISubscriptionBuilder<T>
         where T : Message
     {
-        private readonly ParsedSqsQueueUrl _queueUrlUrl;
+        private readonly Arn _queueArn;
 
-        public AttachedQueueSubscriptionBuilder(string queueUrl)
+        public AttachedQueueSubscriptionBuilder(string queueArn)
         {
-            _queueUrlUrl = ParsedSqsQueueUrl.Parse(queueUrl);
+            if (!Arn.TryParse(queueArn, out var arn)) throw new Exception("Oh noes!");
+            _queueArn = arn;
         }
 
         private Action<AttachedQueueConfig> ConfigureReads { get; set; }
@@ -41,19 +42,20 @@ namespace JustSaying.Fluent
 
             ConfigureReads?.Invoke(attachedQueueConfig);
 
-            attachedQueueConfig.SubscriptionGroupName ??= _queueUrlUrl.QueueName;
+            attachedQueueConfig.SubscriptionGroupName ??= _queueArn.Resource;
             attachedQueueConfig.MiddlewareConfiguration = attachedQueueConfig.MiddlewareConfiguration;
             attachedQueueConfig.Validate();
 
             IAmazonSQS sqsClient = serviceResolver
                 .ResolveService<IAwsClientFactory>()
-                .GetSqsClient(RegionEndpoint.GetBySystemName(_queueUrlUrl.Region));
+                .GetSqsClient(RegionEndpoint.GetBySystemName(_queueArn.Region));
 
             var queue = new AttachedQueue
             {
-                Uri = _queueUrlUrl.QueueUri,
-                QueueName = _queueUrlUrl.QueueName,
-                RegionSystemName = _queueUrlUrl.Region,
+                Arn = _queueArn.ToString(),
+                Uri = ArnToQueueUrl(_queueArn),
+                QueueName = _queueArn.Resource,
+                RegionSystemName = _queueArn.Region,
                 Client = sqsClient
             };
 
@@ -61,9 +63,9 @@ namespace JustSaying.Fluent
 
             logger.LogInformation(
                 "Added SQS queue subscription for '{QueueName}'.",
-                _queueUrlUrl.QueueName);
+                _queueArn.Resource);
 
-            var resolutionContext = new HandlerResolutionContext(_queueUrlUrl.QueueName);
+            var resolutionContext = new HandlerResolutionContext(_queueArn.Resource);
             var proposedHandler = handlerResolver.ResolveHandler<T>(resolutionContext);
             if (proposedHandler == null)
             {
@@ -79,12 +81,18 @@ namespace JustSaying.Fluent
                 .Configure(attachedQueueConfig.MiddlewareConfiguration)
                 .Build();
 
-            bus.AddMessageMiddleware<T>(_queueUrlUrl.QueueName, handlerMiddleware);
+            bus.AddMessageMiddleware<T>(_queueArn.Resource, handlerMiddleware);
 
             logger.LogInformation(
                 "Added a message handler for message type for '{MessageType}' on queue '{QueueName}'.",
                 typeof(T),
-                _queueUrlUrl.QueueName);
+                _queueArn.Resource);
+        }
+
+        private static Uri ArnToQueueUrl(Arn queueArn)
+        {
+            var dnsSuffix = RegionEndpoint.GetBySystemName(queueArn.Region).PartitionDnsSuffix;
+            return new Uri($"https://{queueArn.Service}.{queueArn.Region}.{dnsSuffix}/{queueArn.AccountId}/{queueArn.Resource}");
         }
     }
 }
