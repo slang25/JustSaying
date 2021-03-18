@@ -80,7 +80,7 @@ namespace JustSaying.Sample.Restaurant.KitchenConsole
                             // x.ForTopic<OrderPlacedEvent>();
 
                             // New alternative
-                            x.ForQueueUrl<OrderPlacedEvent>("https://myqueue");
+                            x.ForQueueArn<OrderPlacedEvent>("arn:aws:sqs:eu-west-1:450019893392:testqueue");
                         });
 
                         config.Publications(x =>
