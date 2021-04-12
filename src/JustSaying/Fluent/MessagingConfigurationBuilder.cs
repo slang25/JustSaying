@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Amazon;
+using JustSaying.AwsTools;
 using JustSaying.AwsTools.MessageHandling;
 using JustSaying.Messaging.MessageSerialization;
 using JustSaying.Models;
@@ -66,6 +67,14 @@ namespace JustSaying.Fluent
         /// </summary>
         private IQueueNamingConvention QueueNamingConvention { get; set; }
 
+        private InfrastructureMode InfrastructureMode { get; set; } = InfrastructureMode.AutoCreate;
+
+        public MessagingConfigurationBuilder WithNoInfrastructureCreation()
+        {
+            InfrastructureMode = InfrastructureMode.AssumeExists;
+
+            return this;
+        }
 
         /// <summary>
         /// Specifies additional subscriber account(s) to use.
@@ -335,6 +344,8 @@ namespace JustSaying.Fluent
             {
                 config.PublishFailureReAttempts = PublishFailureReAttempts.Value;
             }
+
+            config.InfrastructureMode = InfrastructureMode;
 
             return config;
         }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using JustSaying.Messaging.MessageProcessingStrategies;
 using JustSaying.Messaging.Middleware;
 using JustSaying.Naming;
 
@@ -17,17 +16,17 @@ namespace JustSaying.AwsTools.QueueCreation
             RetryCountBeforeSendingToErrorQueue = JustSayingConstants.DefaultHandlerRetryCount;
         }
 
-        public SubscriptionType SubscriptionType { get; private set; }
+        private SubscriptionType SubscriptionType { get; }
 
         public string TopicName { get; set; }
         public string PublishEndpoint { get; set; }
         public Dictionary<string, string> Tags { get; set; }
 
         public string TopicSourceAccount { get; set; }
-        public IMessageBackoffStrategy MessageBackoffStrategy { get; set; }
         public string FilterPolicy { get; set; }
         public string SubscriptionGroupName { get; set; }
         public Action<HandlerMiddlewareBuilder> MiddlewareConfiguration { get; set; }
+        public InfrastructureMode InfrastructureMode { get; set; }
 
         public void ApplyTopicNamingConvention<T>(ITopicNamingConvention namingConvention)
         {

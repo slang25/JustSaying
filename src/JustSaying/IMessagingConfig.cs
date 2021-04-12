@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using JustSaying.AwsTools;
 using JustSaying.Messaging.Channels.SubscriptionGroups;
 using JustSaying.Messaging.MessageSerialization;
 using JustSaying.Naming;
@@ -12,6 +13,7 @@ namespace JustSaying
         IMessageSubjectProvider MessageSubjectProvider { get; set; }
         ITopicNamingConvention TopicNamingConvention { get; set; }
         IQueueNamingConvention QueueNamingConvention { get; set; }
+        InfrastructureMode InfrastructureMode { get; set; }
         void Validate();
     }
 }

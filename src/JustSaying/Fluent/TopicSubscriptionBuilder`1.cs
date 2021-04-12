@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using JustSaying.AwsTools;
+using JustSaying.AwsTools.MessageHandling;
 using JustSaying.AwsTools.QueueCreation;
 using JustSaying.Messaging.Middleware;
 using JustSaying.Models;
@@ -159,6 +161,7 @@ namespace JustSaying.Fluent
             };
 
             var config = bus.Config;
+            subscriptionConfig.InfrastructureMode = config.InfrastructureMode;
 
             ConfigureReads?.Invoke(subscriptionConfig);
 
@@ -166,14 +169,9 @@ namespace JustSaying.Fluent
             subscriptionConfig.ApplyQueueNamingConvention<T>(config.QueueNamingConvention);
             subscriptionConfig.SubscriptionGroupName ??= subscriptionConfig.QueueName;
             subscriptionConfig.PublishEndpoint = subscriptionConfig.TopicName;
-            subscriptionConfig.MiddlewareConfiguration = subscriptionConfig.MiddlewareConfiguration;
             subscriptionConfig.Validate();
 
-            var queueWithStartup = creator.EnsureTopicExistsWithQueueSubscribed(
-                config.Region,
-                bus.SerializationRegister,
-                subscriptionConfig,
-                config.MessageSubjectProvider);
+            var queueWithStartup = GetQueueWithStartup(subscriptionConfig.InfrastructureMode, bus, creator, config, subscriptionConfig);
             bus.AddStartupTask(queueWithStartup.StartupTask);
 
             bus.AddQueue(subscriptionConfig.SubscriptionGroupName, queueWithStartup.Queue);
@@ -206,6 +204,27 @@ namespace JustSaying.Fluent
                 typeof(T),
                 subscriptionConfig.TopicName,
                 subscriptionConfig.QueueName);
+        }
+
+        private static QueueWithAsyncStartup GetQueueWithStartup(InfrastructureMode infrastructureMode, JustSayingBus bus, IVerifyAmazonQueues creator, IMessagingConfig config, SqsReadConfiguration subscriptionConfig)
+        {
+            switch (infrastructureMode)
+            {
+                case InfrastructureMode.AutoCreate:
+                    return creator.EnsureTopicExistsWithQueueSubscribed(
+                        config.Region,
+                        bus.SerializationRegister,
+                        subscriptionConfig,
+                        config.MessageSubjectProvider);
+                case InfrastructureMode.AssumeExists:
+                    new ExistingQueue(subscriptionConfig.QueueName, config.Region)
+                    break;
+                case InfrastructureMode.ValidateOnly:
+                    // TODO Hmmm not sure this is a good idea tbh
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(infrastructureMode), infrastructureMode, null);
+            }
         }
     }
 }

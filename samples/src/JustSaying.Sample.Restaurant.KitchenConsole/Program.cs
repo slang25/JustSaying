@@ -72,6 +72,7 @@ namespace JustSaying.Sample.Restaurant.KitchenConsole
                         {
                             // Configures which AWS Region to operate in
                             x.WithRegion(configuration.GetAWSRegion());
+                            x.WithNoInfrastructureCreation();
                         });
 
                         config.Subscriptions(x =>
