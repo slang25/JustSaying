@@ -1,16 +1,18 @@
 using System.Security.Cryptography;
+using AWS.Messaging;
 using JustSaying.Messaging;
 using JustSaying.Messaging.MessageHandling;
 using JustSaying.Sample.Restaurant.Models;
 using Microsoft.Extensions.Logging;
+using IMessagePublisher = JustSaying.Messaging.IMessagePublisher;
 
 namespace JustSaying.Sample.Restaurant.KitchenConsole.Handlers;
 
 /// <summary>
 /// Handles messages of type OrderPlacedEvent
-/// Takes a dependency on IMessagePublisher so that further messages can be published 
+/// Takes a dependency on IMessagePublisher so that further messages can be published
 /// </summary>
-public class OrderPlacedEventHandler(IMessagePublisher publisher, ILogger<OrderPlacedEventHandler> logger) : IHandlerAsync<OrderPlacedEvent>
+public class OrderPlacedEventHandler(IMessagePublisher publisher, ILogger<OrderPlacedEventHandler> logger) : IHandlerAsync<OrderPlacedEvent>, IMessageHandler<OrderPlacedEvent>
 {
     public async Task<bool> Handle(OrderPlacedEvent message)
     {
@@ -46,5 +48,11 @@ public class OrderPlacedEventHandler(IMessagePublisher publisher, ILogger<OrderP
             logger.LogError(ex, "Failed to handle message for {orderId}", message.OrderId);
             return false;
         }
+    }
+
+    public async Task<MessageProcessStatus> HandleAsync(MessageEnvelope<OrderPlacedEvent> messageEnvelope, CancellationToken token = new CancellationToken())
+    {
+        var result = await Handle(messageEnvelope.Message);
+        return result ? MessageProcessStatus.Success() : MessageProcessStatus.Failed();
     }
 }
