@@ -54,7 +54,7 @@ try
             //  - a SQS queue of name `orderreadyevent_error`
             //  - a SNS topic of name `orderreadyevent`
             //  - a SNS topic subscription on topic 'orderreadyevent' and queue 'orderreadyevent'
-            x.ForTopic<OrderReadyEvent>();
+            //x.ForTopic<OrderReadyEvent>();
             x.ForTopic<OrderDeliveredEvent>();
         });
         config.Publications(x =>
@@ -63,6 +63,7 @@ try
             //  - a SNS topic of name `orderplacedevent`
             x.WithTopic<OrderPlacedEvent>();
             x.WithTopic<OrderOnItsWayEvent>();
+            x.WithTopic<OrderReadyEvent>();
         });
     });
 
@@ -97,13 +98,20 @@ try
             // Save order to database generating OrderId
             var orderId = Random.Shared.Next(1, 100);
 
-            var message = new OrderPlacedEvent
+            // var message = new OrderPlacedEvent
+            // {
+            //     OrderId = orderId,
+            //     Description = order.Description
+            // };
+            //
+            // await publisher.PublishAsync(message);
+            //
+            var orderReadyEvent = new OrderReadyEvent
             {
-                OrderId = orderId,
-                Description = order.Description
+                OrderId = orderId
             };
 
-            await publisher.PublishAsync(message);
+            await publisher.PublishAsync(orderReadyEvent).ConfigureAwait(false);
 
             app.Logger.LogInformation("Order {orderId} placed", orderId);
         });

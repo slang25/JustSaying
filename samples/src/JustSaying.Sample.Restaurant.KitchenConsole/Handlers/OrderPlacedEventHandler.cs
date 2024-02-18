@@ -12,9 +12,9 @@ namespace JustSaying.Sample.Restaurant.KitchenConsole.Handlers;
 /// Handles messages of type OrderPlacedEvent
 /// Takes a dependency on IMessagePublisher so that further messages can be published
 /// </summary>
-public class OrderPlacedEventHandler(IMessagePublisher publisher, ILogger<OrderPlacedEventHandler> logger) : IHandlerAsync<OrderPlacedEvent>, IMessageHandler<OrderPlacedEvent>
+public class OrderPlacedEventHandler(ILogger<OrderPlacedEventHandler> logger) : IHandlerAsync<OrderReadyEvent>, IMessageHandler<OrderReadyEvent>
 {
-    public async Task<bool> Handle(OrderPlacedEvent message)
+    public async Task<bool> Handle(OrderReadyEvent message)
     {
         // Returning true would indicate:
         //   The message was handled successfully
@@ -26,7 +26,7 @@ public class OrderPlacedEventHandler(IMessagePublisher publisher, ILogger<OrderP
 
         try
         {
-            logger.LogInformation("Order {orderId} for {description} received", message.OrderId, message.Description);
+            logger.LogInformation("Order {orderId} received", message.OrderId);
 
             // This is where you would actually handle the order placement
             // Intentionally left empty for the sake of this being a sample application
@@ -40,7 +40,6 @@ public class OrderPlacedEventHandler(IMessagePublisher publisher, ILogger<OrderP
                 OrderId = message.OrderId
             };
 
-            await publisher.PublishAsync(orderReadyEvent).ConfigureAwait(false);
             return true;
         }
         catch (Exception ex)
@@ -50,7 +49,7 @@ public class OrderPlacedEventHandler(IMessagePublisher publisher, ILogger<OrderP
         }
     }
 
-    public async Task<MessageProcessStatus> HandleAsync(MessageEnvelope<OrderPlacedEvent> messageEnvelope, CancellationToken token = new CancellationToken())
+    public async Task<MessageProcessStatus> HandleAsync(MessageEnvelope<OrderReadyEvent> messageEnvelope, CancellationToken token = new CancellationToken())
     {
         var result = await Handle(messageEnvelope.Message);
         return result ? MessageProcessStatus.Success() : MessageProcessStatus.Failed();

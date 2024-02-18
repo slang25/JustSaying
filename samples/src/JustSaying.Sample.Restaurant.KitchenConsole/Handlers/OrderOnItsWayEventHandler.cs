@@ -1,14 +1,11 @@
 using System.Security.Cryptography;
 using AWS.Messaging;
-using JustSaying.Messaging;
-using JustSaying.Messaging.MessageHandling;
 using JustSaying.Sample.Restaurant.Models;
 using Microsoft.Extensions.Logging;
-using IMessagePublisher = JustSaying.Messaging.IMessagePublisher;
 
 namespace JustSaying.Sample.Restaurant.KitchenConsole.Handlers;
 
-public class OrderOnItsWayEventHandler(IMessagePublisher publisher, ILogger<OrderOnItsWayEventHandler> logger) : IHandlerAsync<OrderOnItsWayEvent>, IMessageHandler<OrderOnItsWayEvent>
+public class OrderOnItsWayEventHandler(ILogger<OrderOnItsWayEventHandler> logger) : IMessageHandler<OrderOnItsWayEvent>
 {
     public async Task<bool> Handle(OrderOnItsWayEvent message)
     {
@@ -20,8 +17,6 @@ public class OrderOnItsWayEventHandler(IMessagePublisher publisher, ILogger<Orde
         };
 
         logger.LogInformation("Order {OrderId} is on its way!", message.OrderId);
-
-        await publisher.PublishAsync(orderDeliveredEvent);
 
         return true;
     }
