@@ -1,10 +1,19 @@
 <Project>
   <ItemGroup Label="Libraries">
+    <PackageVersion Include="OpenTelemetry.Api" Version="1.8.1" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.AWS" Version="1.1.0-beta.4" />
+    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.8.1" />
+    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.8.1" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.8.1" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.8.1" />
+    <PackageVersion Include="Aspire.Hosting.AppHost" Version="8.0.1" />
+    <PackageVersion Include="Aspire.Hosting.AWS" Version="8.0.1-preview.8.24267.1" />
     <PackageVersion Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.300" />
     <PackageVersion Include="AWSSDK.SimpleNotificationService" Version="3.7.0" />
     <PackageVersion Include="AWSSDK.SQS" Version="3.7.0" />
     <PackageVersion Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
     <PackageVersion Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="8.0.1" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="1.1.0" Condition=" '$(TargetFramework)' == 'net461' " />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.0.0" Condition=" '$(TargetFramework)' == 'netstandard2.0' " />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" Condition=" '$(TargetFramework)' == 'net8.0' " />

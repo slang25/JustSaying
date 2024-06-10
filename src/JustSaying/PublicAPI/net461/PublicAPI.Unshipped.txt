@@ -1,0 +1,3 @@
+JustSaying.Messaging.Middleware.TracePropagationMiddleware
+JustSaying.Messaging.Middleware.TracePropagationMiddleware.TracePropagationMiddleware() -> void
+override JustSaying.Messaging.Middleware.TracePropagationMiddleware.RunInnerAsync(JustSaying.Messaging.Middleware.HandleMessageContext context, System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<bool>> func, System.Threading.CancellationToken stoppingToken) -> System.Threading.Tasks.Task<bool>

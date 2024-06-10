@@ -23,7 +23,8 @@ internal static class AmazonSqsClientExtensions
 
         var result = await client.ReceiveMessageAsync(new ReceiveMessageRequest(queueUrl)
             {
-                AttributeNames = [.. attributesToLoad],
+                AttributeNames = ["All"],
+                MessageAttributeNames = ["All"],
                 WaitTimeSeconds = secondsWaitTime,
                 MaxNumberOfMessages = maxNumOfMessages
             },

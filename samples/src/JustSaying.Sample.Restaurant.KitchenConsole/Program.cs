@@ -4,6 +4,9 @@ using JustSaying.Sample.Restaurant.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OpenTelemetry;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
 using Serilog;
 
 const string appName = "KitchenConsole";
@@ -41,6 +44,22 @@ static async Task Run()
         .UseSerilog()
         .ConfigureServices((hostContext, services) =>
         {
+            services.AddServiceDiscovery();
+            services.AddOpenTelemetry()
+                .WithMetrics(builder =>
+                {
+                    builder
+                        .AddRuntimeInstrumentation();
+                })
+                .WithTracing(builder =>
+                {
+                    builder
+                        .AddXRayTraceId()
+                        .SetSampler(new AlwaysOnSampler())
+                        .AddSource("JustSaying")
+                        .AddAWSInstrumentation();
+                })
+                .UseOtlpExporter();;
             var configuration = hostContext.Configuration;
             services.AddJustSaying(config =>
             {

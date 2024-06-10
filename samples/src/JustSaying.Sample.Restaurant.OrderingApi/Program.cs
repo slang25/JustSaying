@@ -4,6 +4,9 @@ using JustSaying.Sample.Restaurant.OrderingApi;
 using JustSaying.Sample.Restaurant.OrderingApi.Handlers;
 using JustSaying.Sample.Restaurant.OrderingApi.Models;
 using Microsoft.OpenApi.Models;
+using OpenTelemetry;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
 using Serilog;
 using Serilog.Events;
 
@@ -23,6 +26,24 @@ try
     var builder = WebApplication.CreateBuilder(args);
     var configuration = builder.Configuration;
     builder.Host.UseSerilog();
+    builder.Services.AddOpenTelemetry()
+        .WithMetrics(builder =>
+        {
+            builder
+                .AddAspNetCoreInstrumentation()
+                .AddRuntimeInstrumentation();
+        })
+        .WithTracing(builder =>
+        {
+            builder
+                .AddAWSInstrumentation()
+                .AddXRayTraceId()
+                .SetSampler(new AlwaysOnSampler())
+                .AddSource("JustSaying")
+                .AddAspNetCoreInstrumentation();
+        })
+        .UseOtlpExporter();
+    builder.Services.AddServiceDiscovery();
     builder.Services.AddJustSaying(config =>
     {
         config.Client(x =>
@@ -103,7 +124,9 @@ try
                 Description = order.Description
             };
 
-            await publisher.PublishAsync(message);
+            var metadata = new PublishMetadata();
+            metadata.AddMessageAttribute("dummy", "value");
+            await publisher.PublishAsync(message, metadata);
 
             app.Logger.LogInformation("Order {orderId} placed", orderId);
         });

@@ -57,6 +57,10 @@ internal class MessageReceiveBuffer : IMessageReceiveBuffer
         _channel = Channel.CreateBounded<IQueueMessageContext>(bufferSize);
 
         _requestMessageAttributeNames.Add(MessageSystemAttributeName.ApproximateReceiveCount);
+        _requestMessageAttributeNames.Add(MessageSystemAttributeName.AWSTraceHeader);
+        _requestMessageAttributeNames.Add(new MessageSystemAttributeName("traceparent"));
+        _requestMessageAttributeNames.Add(new MessageSystemAttributeName("tracestate"));
+        _requestMessageAttributeNames.Add(new MessageSystemAttributeName("baggage"));
     }
 
     /// <summary>

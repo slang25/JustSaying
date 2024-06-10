@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsAspireHost>true</IsAspireHost>
+    <UserSecretsId>1a1ce7aa-268c-4649-ba6d-773b911333e5</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.AppHost" />
+    <PackageReference Include="Aspire.Hosting.AWS"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JustSaying.Sample.Restaurant.KitchenConsole\JustSaying.Sample.Restaurant.KitchenConsole.csproj" />
+    <ProjectReference Include="..\JustSaying.Sample.Restaurant.OrderingApi\JustSaying.Sample.Restaurant.OrderingApi.csproj" />
+  </ItemGroup>
+
+</Project>

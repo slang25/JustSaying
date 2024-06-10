@@ -68,6 +68,7 @@ public static class HandlerMiddlewareBuilderExtensions
         builder.UseStopwatch(handlerType);
         builder.Use<SqsPostProcessorMiddleware>();
         builder.UseErrorHandler();
+        builder.Use(new TracePropagationMiddleware());
         builder.UseHandler<TMessage>();
 
         return builder;

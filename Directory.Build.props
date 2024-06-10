@@ -24,7 +24,7 @@
     <Description>A light-weight message bus on top of AWS SNS and SQS</Description>
     <MinVerMinimumMajorMinor>7.1</MinVerMinimumMajorMinor>
     <MinVerTagPrefix>v</MinVerTagPrefix>
-    <MinVerSkip Condition=" '$(Configuration)' == 'Debug' ">true</MinVerSkip>
+    <MinVerSkip Condition=" '$(CI)' == 'true' ">true</MinVerSkip>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
