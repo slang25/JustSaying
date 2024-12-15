@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Security.Cryptography;
 using JustSaying.Messaging.MessageHandling;
 using JustSaying.Sample.Restaurant.Models;
@@ -11,6 +12,13 @@ public class OrderDeliveredEventHandler(ILogger<OrderDeliveredEventHandler> logg
         await Task.Delay(RandomNumberGenerator.GetInt32(50, 100));
 
         logger.LogInformation("Order {OrderId} has been delivered", message.OrderId);
+
+        // Process.Start(new ProcessStartInfo
+        // {
+        //     FileName = "open",
+        //     Arguments = "raycast://confetti"
+        // });
+
         return true;
     }
 }

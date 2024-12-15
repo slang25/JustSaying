@@ -95,6 +95,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\update-dotnet-sdk.yml = .github\workflows\update-dotnet-sdk.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JustSaying.Sample.AppHost", "samples\src\JustSaying.Sample.AppHost\JustSaying.Sample.AppHost.csproj", "{8E33B886-2792-4723-8AD9-3F8EC27CFCD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -165,6 +167,10 @@ Global
 		{1B99B357-5D76-4540-B28E-B6CD3F6F1963}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B99B357-5D76-4540-B28E-B6CD3F6F1963}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B99B357-5D76-4540-B28E-B6CD3F6F1963}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E33B886-2792-4723-8AD9-3F8EC27CFCD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E33B886-2792-4723-8AD9-3F8EC27CFCD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E33B886-2792-4723-8AD9-3F8EC27CFCD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E33B886-2792-4723-8AD9-3F8EC27CFCD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -191,6 +197,7 @@ Global
 		{4EFC48D7-4B45-4EBC-9237-4B84FE8239E0} = {A94633F2-29F2-48C6-840A-C5370B300AE2}
 		{1B99B357-5D76-4540-B28E-B6CD3F6F1963} = {E22A50F2-9952-4483-8AD1-09BE354FB3E4}
 		{C91A9AE0-10A6-41FE-89CB-058E24CF02D3} = {F0BCBE5F-2132-422D-B17B-23B7FCC4A8A8}
+		{8E33B886-2792-4723-8AD9-3F8EC27CFCD1} = {77C93C37-DE5B-448F-9A23-6C9D0C8465CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {18FBDF85-C124-4444-9F03-D0D4F2B3A612}
