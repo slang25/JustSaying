@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.Build.NoTargets/3.7.56">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+        <GenerateMSBuildEditorConfigFile>False</GenerateMSBuildEditorConfigFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Content Include="ReadOnlySnsClient.cs" />
+        <Content Include="ReadOnlySqsClient.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AWSSDK.SQS" VersionOverride="3.7.400.173" />
+        <PackageReference Include="AWSSDK.SimpleNotificationService" VersionOverride="3.7.400.173" />
+    </ItemGroup>
+
+</Project>

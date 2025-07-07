@@ -57,6 +57,11 @@
     <Project Path="src/JustSaying.Tools/JustSaying.Tools.csproj" />
     <Project Path="src/JustSaying/JustSaying.csproj" />
   </Folder>
+  <Folder Name="/Supporting Libraries/">
+    <Project Path="src\JustSaying.AwsResourceOverrides.Shared\JustSaying.AwsResourceOverrides.Shared.csproj" Type="Classic C#" />
+    <Project Path="src\JustSaying.AwsResourceOverrides.V6\JustSaying.AwsResourceOverrides.V6.csproj" Type="Classic C#" />
+    <Project Path="tests\JustSaying.AwsResourceOverrides.Tests\JustSaying.AwsResourceOverrides.Tests.csproj" Type="Classic C#" />
+  </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/JustSaying.Benchmark/JustSaying.Benchmark.csproj" />
     <Project Path="tests/JustSaying.Extensions.Aws.Tests/JustSaying.Extensions.Aws.Tests.csproj" />

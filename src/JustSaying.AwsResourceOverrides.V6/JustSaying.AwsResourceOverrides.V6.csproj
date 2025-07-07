@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <SignAssembly>false</SignAssembly>
+        <RootNamespace>JustSaying.AwsResourceOverrides</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="JustSaying" VersionOverride="6.0.5" />
+        <PackageReference Include="AWSSDK.SQS" VersionOverride="3.7.400.173" />
+        <PackageReference Include="AWSSDK.SimpleNotificationService" VersionOverride="3.7.400.173" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\JustSaying.AwsResourceOverrides.Shared\JustSaying.AwsResourceOverrides.Shared.csproj" />
+    </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Include="..\JustSaying.AwsResourceOverrides.Shared\**\*.cs">
+      <Link>..\JustSaying.AwsResourceOverrides.Shared</Link>
+    </Compile>
+  </ItemGroup>
+
+</Project>
