@@ -11,13 +11,13 @@ public class GenericMessageSubjectProviderTests
     class Bar<T> { }
 #pragma warning restore CA1812
 
-    [Fact]
-    public void GetSubjectForType_NonGenericType_ReturnsTypeNameWithNamespace_NonWordCharactersReplaced() =>
+    [Test]
+    public async Task GetSubjectForType_NonGenericType_ReturnsTypeNameWithNamespace_NonWordCharactersReplaced() =>
         new GenericMessageSubjectProvider().GetSubjectForType(typeof(Foo))
             .ShouldBe("Foo_JustSaying_UnitTests_Messaging_Serialization_SubjectProviders");
 
-    [Fact]
-    public void GetSubjectForType_GenericType_ReturnsFlattenedTypeNamesWithNamepaces_TrunactedToMaxSnsSubjectLength()
+    [Test]
+    public async Task GetSubjectForType_GenericType_ReturnsFlattenedTypeNamesWithNamepaces_TrunactedToMaxSnsSubjectLength()
     {
         var subject = new GenericMessageSubjectProvider().GetSubjectForType(typeof(Bar<Foo>));
         subject.ShouldStartWith("Bar_1_JustSaying_UnitTests_Messaging_Serialization_SubjectProviders_Foo_JustSaying_");

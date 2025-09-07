@@ -7,7 +7,7 @@ namespace JustSaying.UnitTests.Messaging.Policies;
 
 public class CanCreatePolicy
 {
-    [Fact]
+    [Test]
     public async Task PolicyBuilder_Async()
     {
         var called = false;
@@ -24,7 +24,7 @@ public class CanCreatePolicy
         result.ShouldBe(1);
     }
 
-    [Fact]
+    [Test]
     public async Task MiddlewareBuilder_Error_Handler_Async()
     {
         var called = false;
@@ -42,7 +42,7 @@ public class CanCreatePolicy
         result.ShouldBe(0);
     }
 
-    [Fact]
+    [Test]
     public async Task Can_Integrate_With_Polly_Policies_Async()
     {
         var pipeline = new ResiliencePipelineBuilder()

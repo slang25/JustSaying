@@ -7,15 +7,15 @@ namespace JustSaying.UnitTests.Messaging.Middleware;
 
 public class MiddlewareMapTests
 {
-    [Fact]
-    public void EmptyMapDoesNotContain()
+    [Test]
+    public async Task EmptyMapDoesNotContain()
     {
         var map = CreateMiddlewareMap();
         map.Contains("queue", typeof(SimpleMessage)).ShouldBeFalse();
     }
 
-    [Fact]
-    public void EmptyMapReturnsNullMiddleware()
+    [Test]
+    public async Task EmptyMapReturnsNullMiddleware()
     {
         var map = CreateMiddlewareMap();
 
@@ -24,8 +24,8 @@ public class MiddlewareMapTests
         handler.ShouldBeNull();
     }
 
-    [Fact]
-    public void MiddlewareIsReturnedForMatchingType()
+    [Test]
+    public async Task MiddlewareIsReturnedForMatchingType()
     {
         var map = CreateMiddlewareMap();
 
@@ -37,8 +37,8 @@ public class MiddlewareMapTests
         handler.ShouldNotBeNull();
     }
 
-    [Fact]
-    public void MiddlewareContainsKeyForMatchingTypeOnly()
+    [Test]
+    public async Task MiddlewareContainsKeyForMatchingTypeOnly()
     {
         var map = CreateMiddlewareMap();
         var middleware = new DelegateMessageHandlingMiddleware<SimpleMessage>(m => Task.FromResult(true));
@@ -48,8 +48,8 @@ public class MiddlewareMapTests
         map.Contains("queue", typeof(AnotherSimpleMessage)).ShouldBeFalse();
     }
 
-    [Fact]
-    public void MiddlewareIsNotReturnedForNonMatchingType()
+    [Test]
+    public async Task MiddlewareIsNotReturnedForNonMatchingType()
     {
         var map = CreateMiddlewareMap();
         var middleware = new DelegateMessageHandlingMiddleware<SimpleMessage>(m => Task.FromResult(true));
@@ -60,8 +60,8 @@ public class MiddlewareMapTests
         handler.ShouldBeNull();
     }
 
-    [Fact]
-    public void MultipleMiddlewareForATypeAreNotSupported()
+    [Test]
+    public async Task MultipleMiddlewareForATypeAreNotSupported()
     {
         HandleMessageMiddleware fn1 = new DelegateMessageHandlingMiddleware<SimpleMessage>(m => Task.FromResult(true));
         HandleMessageMiddleware fn2 = new DelegateMessageHandlingMiddleware<SimpleMessage>(m => Task.FromResult(true));
@@ -75,8 +75,8 @@ public class MiddlewareMapTests
         map.Get("queue", typeof(SimpleMessage)).ShouldBe(fn2);
     }
 
-    [Fact]
-    public void MultipleMiddlewareForATypeWithOtherHandlersAreNotSupported()
+    [Test]
+    public async Task MultipleMiddlewareForATypeWithOtherHandlersAreNotSupported()
     {
         HandleMessageMiddleware fn1 = new DelegateMessageHandlingMiddleware<SimpleMessage>(m => Task.FromResult(true));
         HandleMessageMiddleware fn2 = new DelegateMessageHandlingMiddleware<SimpleMessage>(m => Task.FromResult(false));
@@ -92,8 +92,8 @@ public class MiddlewareMapTests
         map.Get("queue", typeof(AnotherSimpleMessage)).ShouldBe(fn3);
     }
 
-    [Fact]
-    public void MiddlewareIsNotReturnedForAnotherQueue()
+    [Test]
+    public async Task MiddlewareIsNotReturnedForAnotherQueue()
     {
         string queue1 = "queue1";
         string queue2 = "queue2";
@@ -107,8 +107,8 @@ public class MiddlewareMapTests
         handler.ShouldBeNull();
     }
 
-    [Fact]
-    public void MiddlewareContainsKeyForMatchingQueueOnly()
+    [Test]
+    public async Task MiddlewareContainsKeyForMatchingQueueOnly()
     {
         string queue1 = "queue1";
         string queue2 = "queue2";
@@ -121,8 +121,8 @@ public class MiddlewareMapTests
         map.Contains(queue2, typeof(AnotherSimpleMessage)).ShouldBeFalse();
     }
 
-    [Fact]
-    public void MiddlewareHandlerIsReturnedForQueue()
+    [Test]
+    public async Task MiddlewareHandlerIsReturnedForQueue()
     {
         string queue1 = "queue1";
         string queue2 = "queue2";

@@ -6,7 +6,7 @@ namespace JustSaying.UnitTests.Messaging;
 
 public static class MessagePublisherExtensionsTests
 {
-    [Fact]
+    [Test]
     public static async Task ArgumentsAreCheckedForNull()
     {
         // Arrange
@@ -23,7 +23,7 @@ public static class MessagePublisherExtensionsTests
         await Assert.ThrowsAsync<ArgumentNullException>("publisher", () => (null as IMessageBatchPublisher).PublishAsync(messages, CancellationToken.None));
     }
 
-    [Fact]
+    [Test]
     public static async Task MessagesAreBatchedIfAlsoABatchPublisher()
     {
         // Arrange
@@ -40,7 +40,7 @@ public static class MessagePublisherExtensionsTests
         await publisher.Received(0).PublishAsync(Arg.Any<Message>(), Arg.Any<PublishMetadata>(), Arg.Any<CancellationToken>());
     }
 
-    [Fact]
+    [Test]
     public static async Task MessagesAreSerializedIfNotABatchPublisher()
     {
         // Arrange

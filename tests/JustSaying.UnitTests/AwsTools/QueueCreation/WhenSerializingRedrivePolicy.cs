@@ -4,8 +4,8 @@ namespace JustSaying.UnitTests.AwsTools.QueueCreation;
 
 public class WhenSerializingRedrivePolicy
 {
-    [Fact]
-    public void CanDeserializeIntoRedrivePolicy()
+    [Test]
+    public async Task CanDeserializeIntoRedrivePolicy()
     {
         var policy = new RedrivePolicy(1, "queue");
         var policySerialized = policy.ToString();

@@ -6,60 +6,60 @@ namespace JustSaying.UnitTests.Fluent;
 
 public class AccountAddressProviderTests
 {
-    [Fact]
-    public void CanGetAccountQueueByName()
+    [Test]
+    public async Task CanGetAccountQueueByName()
     {
         var sut = new AccountAddressProvider("123456789012", "eu-west-1");
         var address = sut.GetQueueUri("queue1");
 
-        Assert.Equal(new Uri(" https://sqs.eu-west-1.amazonaws.com/123456789012/queue1"), address);
+        await Assert.That(address).IsEqualTo(new Uri(" https://sqs.eu-west-1.amazonaws.com/123456789012/queue1"));
     }
 
-    [Fact]
-    public void CanGetAccountTopicByName()
+    [Test]
+    public async Task CanGetAccountTopicByName()
     {
         var sut = new AccountAddressProvider("123456789012", "eu-west-1");
         var address = sut.GetTopicArn("topic1");
 
-        Assert.Equal("arn:aws:sns:eu-west-1:123456789012:topic1", address);
+        await Assert.That(address).IsEqualTo("arn:aws:sns:eu-west-1:123456789012:topic1");
     }
 
-    [Fact]
-    public void CanGetAccountQueueByDefaultConvention()
+    [Test]
+    public async Task CanGetAccountQueueByDefaultConvention()
     {
         var sut = new AccountAddressProvider("123456789012", "eu-west-1");
         var address = sut.GetQueueUriByConvention<Order>();
 
-        Assert.Equal(new Uri(" https://sqs.eu-west-1.amazonaws.com/123456789012/order"), address);
+        await Assert.That(address).IsEqualTo(new Uri(" https://sqs.eu-west-1.amazonaws.com/123456789012/order"));
     }
 
-    [Fact]
-    public void CanGetAccountTopicByDefaultConvention()
+    [Test]
+    public async Task CanGetAccountTopicByDefaultConvention()
     {
         var sut = new AccountAddressProvider("123456789012", "eu-west-1");
         var address = sut.GetTopicArnByConvention<Order>();
 
-        Assert.Equal("arn:aws:sns:eu-west-1:123456789012:order", address);
+        await Assert.That(address).IsEqualTo("arn:aws:sns:eu-west-1:123456789012:order");
     }
 
-    [Fact]
-    public void CanGetAccountQueueByCustomConvention()
+    [Test]
+    public async Task CanGetAccountQueueByCustomConvention()
     {
         var convention = new ManualNamingConvention("adhoc-queue-name", null);
         var sut = new AccountAddressProvider("123456789012", "eu-west-1", convention, null);
         var address = sut.GetQueueUriByConvention<Order>();
 
-        Assert.Equal(new Uri(" https://sqs.eu-west-1.amazonaws.com/123456789012/adhoc-queue-name"), address);
+        await Assert.That(address).IsEqualTo(new Uri(" https://sqs.eu-west-1.amazonaws.com/123456789012/adhoc-queue-name"));
     }
 
-    [Fact]
-    public void CanGetAccountTopicByCustomConvention()
+    [Test]
+    public async Task CanGetAccountTopicByCustomConvention()
     {
         var convention = new ManualNamingConvention(null, "adhoc-topic-name");
         var sut = new AccountAddressProvider("123456789012", "eu-west-1", null, convention);
         var address = sut.GetTopicArnByConvention<Order>();
 
-        Assert.Equal("arn:aws:sns:eu-west-1:123456789012:adhoc-topic-name", address);
+        await Assert.That(address).IsEqualTo("arn:aws:sns:eu-west-1:123456789012:adhoc-topic-name");
     }
 
     private class ManualNamingConvention(string queueName, string topicName) : IQueueNamingConvention, ITopicNamingConvention

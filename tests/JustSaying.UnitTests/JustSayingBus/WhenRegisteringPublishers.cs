@@ -29,8 +29,8 @@ public class WhenRegisteringPublishers(ITestOutputHelper outputHelper) : GivenAS
         await SystemUnderTest.PublishAsync(new OrderRejected());
     }
 
-    [Fact]
-    public void AcceptedOrderWasPublishedOnce()
+    [Test]
+    public async Task AcceptedOrderWasPublishedOnce()
     {
         _publisher.Received(1).PublishAsync(
             Arg.Is<Message>(m => m is OrderAccepted),
@@ -38,8 +38,8 @@ public class WhenRegisteringPublishers(ITestOutputHelper outputHelper) : GivenAS
             Arg.Any<CancellationToken>());
     }
 
-    [Fact]
-    public void RejectedOrderWasPublishedTwice()
+    [Test]
+    public async Task RejectedOrderWasPublishedTwice()
     {
         _publisher.Received(2).PublishAsync(
             Arg.Is<Message>(m => m is OrderRejected),
@@ -47,8 +47,8 @@ public class WhenRegisteringPublishers(ITestOutputHelper outputHelper) : GivenAS
             Arg.Any<CancellationToken>());
     }
 
-    [Fact]
-    public void AndInterrogationShowsPublishersHaveBeenSet()
+    [Test]
+    public async Task AndInterrogationShowsPublishersHaveBeenSet()
     {
         dynamic response = SystemUnderTest.Interrogate();
 

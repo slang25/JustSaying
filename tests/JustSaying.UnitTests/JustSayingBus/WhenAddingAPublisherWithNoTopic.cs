@@ -18,8 +18,8 @@ public class WhenAddingAPublisherWithNoTopic(ITestOutputHelper outputHelper) : G
         return Task.CompletedTask;
     }
 
-    [Fact]
-    public void ExceptionThrown()
+    [Test]
+    public async Task ExceptionThrown()
     {
         ThrownException.ShouldNotBeNull();
     }

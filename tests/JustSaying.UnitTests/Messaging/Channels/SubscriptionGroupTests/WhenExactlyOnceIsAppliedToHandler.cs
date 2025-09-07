@@ -61,14 +61,14 @@ public class WhenExactlyOnceIsAppliedToHandler(ITestOutputHelper testOutputHelpe
         await Assert.ThrowsAnyAsync<OperationCanceledException>(() => completion);
     }
 
-    [Fact]
-    public void ProcessingIsPassedToTheHandler()
+    [Test]
+    public async Task ProcessingIsPassedToTheHandler()
     {
         Handler.ReceivedMessages.ShouldNotBeEmpty();
     }
 
-    [Fact]
-    public void MessageIsLocked()
+    [Test]
+    public async Task MessageIsLocked()
     {
         // this should be part of setup to make work
         var messageId = SetupMessage.Id.ToString();

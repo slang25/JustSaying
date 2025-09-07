@@ -59,8 +59,8 @@ public class WhenExactlyOnceIsAppliedWithoutSpecificTimeout(ITestOutputHelper te
 
     }
 
-    [Fact]
-    public void MessageIsLocked()
+    [Test]
+    public async Task MessageIsLocked()
     {
         var messageId = SetupMessage.Id.ToString();
 

@@ -1,1 +1,1 @@
-[assembly: CollectionBehavior(DisableTestParallelization = false)]
+// TUnit handles test parallelization through its own configuration

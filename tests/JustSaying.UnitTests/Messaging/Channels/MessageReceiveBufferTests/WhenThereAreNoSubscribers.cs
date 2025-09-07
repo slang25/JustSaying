@@ -55,7 +55,7 @@ public class WhenThereAreNoSubscribers
             loggerFactory.CreateLogger<IMessageReceiveBuffer>());
     }
 
-    [Fact]
+    [Test]
     public async Task Buffer_Is_Filled()
     {
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(1));

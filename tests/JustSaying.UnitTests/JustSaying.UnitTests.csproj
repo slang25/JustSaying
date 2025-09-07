@@ -19,11 +19,13 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Newtonsoft.Json" VersionOverride="13.0.3" />
     <PackageReference Include="Polly.Core" />
-    <PackageReference Include="xunit.v3" />
-    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="TUnit" />
+    <PackageReference Include="TUnit.Assertions" />
   </ItemGroup>
   <ItemGroup>
     <Using Include="Shouldly" />
-    <Using Include="Xunit" />
+    <Using Include="TUnit.Core" />
+    <Using Include="TUnit.Assertions" />
+    <Using Include="JustSaying.UnitTests.TestHelpers" />
   </ItemGroup>
 </Project>

@@ -17,8 +17,8 @@ public class WhenPublishingWithoutRegistering(ITestOutputHelper outputHelper) : 
         await SystemUnderTest.PublishAsync(Substitute.For<Message>());
     }
 
-    [Fact]
-    public void InvalidOperationIsThrown()
+    [Test]
+    public async Task InvalidOperationIsThrown()
     {
         ThrownException.ShouldBeAssignableTo<InvalidOperationException>();
     }

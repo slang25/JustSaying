@@ -36,7 +36,7 @@ public class WhenPublishingInBatchAsyncExceptionCanBeHandled : WhenPublishingTes
         return Task.CompletedTask;
     }
 
-    [Fact]
+    [Test]
     public async Task FailSilently()
     {
         var unexpectedException = await Record.ExceptionAsync(

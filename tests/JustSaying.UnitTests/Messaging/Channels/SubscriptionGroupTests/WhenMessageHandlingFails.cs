@@ -16,20 +16,20 @@ public class WhenMessageHandlingFails(ITestOutputHelper testOutputHelper) : Base
         Handler.ShouldSucceed = false;
     }
 
-    [Fact]
-    public void MessageHandlerWasCalled()
+    [Test]
+    public async Task MessageHandlerWasCalled()
     {
         Handler.ReceivedMessages.ShouldNotBeEmpty();
     }
 
-    [Fact]
-    public void FailedMessageIsNotRemovedFromQueue()
+    [Test]
+    public async Task FailedMessageIsNotRemovedFromQueue()
     {
         _queue.DeleteMessageRequests.ShouldBeEmpty();
     }
 
-    [Fact]
-    public void ExceptionIsNotLoggedToMonitor()
+    [Test]
+    public async Task ExceptionIsNotLoggedToMonitor()
     {
         Monitor.HandledExceptions.ShouldBeEmpty();
     }

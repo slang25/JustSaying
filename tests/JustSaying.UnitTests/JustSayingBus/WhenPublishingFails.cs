@@ -34,8 +34,8 @@ public class WhenPublishingFails(ITestOutputHelper outputHelper) : GivenAService
         await SystemUnderTest.PublishAsync(new SimpleMessage(), cts.Token);
     }
 
-    [Fact]
-    public void EventPublicationWasAttemptedTheConfiguredNumberOfTimes()
+    [Test]
+    public async Task EventPublicationWasAttemptedTheConfiguredNumberOfTimes()
     {
         _publisher
             .Received(PublishAttempts)

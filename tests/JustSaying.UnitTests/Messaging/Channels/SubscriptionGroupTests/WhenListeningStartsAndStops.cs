@@ -56,20 +56,20 @@ public class WhenListeningStartsAndStops(ITestOutputHelper testOutputHelper) : B
         _running = false;
     }
 
-    [Fact]
-    public void MessagesAreReceived()
+    [Test]
+    public async Task MessagesAreReceived()
     {
         _queue.ReceiveMessageRequests.ShouldNotBeEmpty();
     }
 
-    [Fact]
-    public void TheMaxMessageAllowanceIsGrabbed()
+    [Test]
+    public async Task TheMaxMessageAllowanceIsGrabbed()
     {
         _queue.ReceiveMessageRequests.ShouldAllBe(req => req.MaxNumOfMessages == _expectedMaxMessageCount);
     }
 
-    [Fact]
-    public void MessageIsProcessed()
+    [Test]
+    public async Task MessageIsProcessed()
     {
         Handler.ReceivedMessages.ShouldContain(m => m.Content.Equals("Message Contents Running"));
         Handler.ReceivedMessages.ShouldNotContain(m => m.Content.Equals("Message Contents After Stop"));

@@ -37,7 +37,7 @@ public class ChannelsTests
         MessageMonitor = new TrackingLoggingMonitor(LoggerFactory.CreateLogger<TrackingLoggingMonitor>());
     }
 
-    [Fact]
+    [Test]
     public async Task QueueCanBeAssignedToOnePump()
     {
         var sqsQueue = TestQueue();
@@ -62,7 +62,7 @@ public class ChannelsTests
         await Assert.ThrowsAnyAsync<OperationCanceledException>(() => buffer1Completion);
     }
 
-    [Fact]
+    [Test]
     public async Task QueueCanBeAssignedToMultiplePumps()
     {
         var sqsQueue = TestQueue();
@@ -95,7 +95,7 @@ public class ChannelsTests
         results.Any().ShouldBeTrue();
     }
 
-    [Fact]
+    [Test]
     public async Task MultipleQueuesCanBeAssignedToOnePump()
     {
         var sqsQueue1 = TestQueue();
@@ -131,7 +131,7 @@ public class ChannelsTests
         results.Any().ShouldBeTrue();
     }
 
-    [Fact]
+    [Test]
     public async Task MultipleQueuesCanBeAssignedToMultiplePumps()
     {
         var sqsQueue1 = TestQueue();
@@ -176,9 +176,9 @@ public class ChannelsTests
         results.Any().ShouldBeTrue();
     }
 
-    [Theory]
-    [InlineData(5, 5, 2, 10)]
-    [InlineData(10, 20, 20, 50)]
+    [Test]
+    [Arguments(5, 5, 2, 10)]
+    [Arguments(10, 20, 20, 50)]
     public async Task WhenSubscriberNotStarted_BufferShouldFillUp_AndStopDownloading(int receivePrefetch, int receiveBufferSize, int multiplexerCapacity, int expectedDownloadCount)
     {
         var sqsSource = TestQueue();
@@ -219,7 +219,7 @@ public class ChannelsTests
             });
     }
 
-    [Fact]
+    [Test]
     public async Task Can_Be_Set_Up_Using_SubscriptionBus()
     {
         var sqsQueue1 = TestQueue();
@@ -237,7 +237,7 @@ public class ChannelsTests
     }
 
 
-    [Fact]
+    [Test]
     public async Task Sqs_Queue_Is_Not_Polled_After_Cancellation()
     {
         var cts = new CancellationTokenSource();
@@ -269,7 +269,7 @@ public class ChannelsTests
         callCountAfterCancelled.ShouldBeLessThanOrEqualTo(1);
     }
 
-    [Fact]
+    [Test]
     public async Task Messages_Not_Dispatched_After_Cancellation()
     {
         var cts = new CancellationTokenSource();
@@ -302,8 +302,8 @@ public class ChannelsTests
         dispatchedAfterCancelled.ShouldBe(0);
     }
 
-    [Fact]
-    public void SubscriptionGroup_StartingTwice_ShouldReturnSameCompletionTask()
+    [Test]
+    public async Task SubscriptionGroup_StartingTwice_ShouldReturnSameCompletionTask()
     {
         var queue = TestQueue();
         var dispatcher = new FakeDispatcher();

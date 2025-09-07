@@ -51,8 +51,8 @@ public sealed class WhenUsingSqsQueueByName(ITestOutputHelper testOutputHelper) 
         });
     }
 
-    [Fact]
-    public void HandlerReceivesMessage()
+    [Test]
+    public async Task HandlerReceivesMessage()
     {
         Handler.ReceivedMessages.Contains(_message)
             .ShouldBeTrue();

@@ -113,8 +113,8 @@ public class WhenDispatchingMessage : IAsyncLifetime
         return dispatcher;
     }
 
-    [Fact]
-    public void ShouldDeserializeMessage()
+    [Test]
+    public async Task ShouldDeserializeMessage()
     {
         _messageBodySerializer.Received(1).Deserialize(Arg.Is<string>(x => x == _sqsMessage.Body));
     }
@@ -131,7 +131,7 @@ public class WhenDispatchingMessage : IAsyncLifetime
             _sqsMessage.Attributes.Add(MessageSystemAttributeName.ApproximateReceiveCount, ExpectedReceiveCount.ToString(CultureInfo.InvariantCulture));
         }
 
-        [Fact]
+        [Test]
         public async Task ShouldNotHandleMessage()
         {
             _messageBodySerializer.Received(1).Deserialize(Arg.Is<string>(x => x == _sqsMessage.Body));
@@ -164,8 +164,8 @@ public class WhenDispatchingMessage : IAsyncLifetime
             _middlewareMap.Add<SimpleMessage>(_queue.QueueName, middleware);
         }
 
-        [Fact]
-        public void ShouldDeleteMessageIfHandledSuccessfully()
+        [Test]
+        public async Task ShouldDeleteMessageIfHandledSuccessfully()
         {
             var request = _queue.DeleteMessageRequests.ShouldHaveSingleItem();
             request.QueueUrl.ShouldBe(ExpectedQueueUrl);
@@ -204,14 +204,14 @@ public class WhenDispatchingMessage : IAsyncLifetime
             _sqsMessage.Attributes.Add(MessageSystemAttributeName.ApproximateReceiveCount, ExpectedReceiveCount.ToString(CultureInfo.InvariantCulture));
         }
 
-        [Fact]
-        public void ShouldInvokeMessageBackoffStrategyWithNumberOfReceives()
+        [Test]
+        public async Task ShouldInvokeMessageBackoffStrategyWithNumberOfReceives()
         {
             _messageBackoffStrategy.Received(1).GetBackoffDuration(Arg.Is(_typedMessage), Arg.Is(ExpectedReceiveCount), Arg.Is(_expectedException));
         }
 
-        [Fact]
-        public void ShouldUpdateMessageVisibility()
+        [Test]
+        public async Task ShouldUpdateMessageVisibility()
         {
             var request = _queue.ChangeMessageVisibilityRequests.ShouldHaveSingleItem();
             request.QueueUrl.ShouldBe(ExpectedQueueUrl);

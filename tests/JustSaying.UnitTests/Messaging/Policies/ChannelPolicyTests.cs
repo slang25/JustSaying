@@ -31,7 +31,7 @@ public class ChannelPolicyTests
         MessageMonitor = new TrackingLoggingMonitor(LoggerFactory.CreateLogger<TrackingLoggingMonitor>());
     }
 
-    [Fact]
+    [Test]
     public async Task ErrorHandlingAroundSqs_WithCustomPolicy_CanSwallowExceptions()
     {
         // Arrange

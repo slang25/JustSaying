@@ -13,7 +13,7 @@ public class WhenCreatingTopicWithNoPermissions(ITestOutputHelper outputHelper)
 {
     private ITestOutputHelper OutputHelper { get; } = outputHelper;
 
-    [Fact]
+    [Test]
     public async Task Arn_Still_Retrieved_When_It_Already_Exists()
     {
         // Arrange
@@ -34,7 +34,7 @@ public class WhenCreatingTopicWithNoPermissions(ITestOutputHelper outputHelper)
         topic.Arn.ShouldNotBeNull();
     }
 
-    [Fact]
+    [Test]
     public async Task Cannot_Create_Topic_Because_Not_Authorized()
     {
         // Arrange

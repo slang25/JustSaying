@@ -74,7 +74,7 @@ public class WhenReceivingShouldStop
         return messagesProcessed;
     }
 
-    [Fact]
+    [Test]
     public async Task No_Messages_Are_Processed()
     {
         // Signal stop receiving messages
@@ -100,7 +100,7 @@ public class WhenReceivingShouldStop
         messagesRead.ShouldBe(0);
     }
 
-    [Fact]
+    [Test]
     public async Task All_Messages_Are_Processed_After_Starting()
     {
         // Signal stop receiving messages

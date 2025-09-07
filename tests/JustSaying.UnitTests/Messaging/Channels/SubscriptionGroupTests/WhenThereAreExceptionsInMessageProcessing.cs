@@ -41,8 +41,8 @@ public class WhenThereAreExceptionsInMessageProcessing(ITestOutputHelper testOut
         return Task.FromResult(_callCount > 1);
     }
 
-    [Fact]
-    public void TheListenerDoesNotDie()
+    [Test]
+    public async Task TheListenerDoesNotDie()
     {
         _callCount.ShouldBeGreaterThan(1);
     }

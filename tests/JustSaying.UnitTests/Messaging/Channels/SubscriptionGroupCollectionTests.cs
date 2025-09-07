@@ -29,7 +29,7 @@ public class SubscriptionGroupCollectionTests
         MessageMonitor = new TrackingLoggingMonitor(LoggerFactory.CreateLogger<TrackingLoggingMonitor>());
     }
 
-    [Fact]
+    [Test]
     public async Task Add_Different_Handler_Per_Queue()
     {
         // Arrange

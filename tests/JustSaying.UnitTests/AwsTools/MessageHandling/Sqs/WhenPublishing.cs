@@ -40,8 +40,8 @@ public class WhenPublishing : WhenPublishingTestBase
         await SystemUnderTest.PublishAsync(_message);
     }
 
-    [Fact]
-    public void MessageIsPublishedToQueue()
+    [Test]
+    public async Task MessageIsPublishedToQueue()
     {
         _capturedMessageBody.ShouldNotBeNull();
         var jsonNode = JsonNode.Parse(_capturedMessageBody).ShouldNotBeNull();
@@ -51,8 +51,8 @@ public class WhenPublishing : WhenPublishingTestBase
         content.ShouldBe("Hello");
     }
 
-    [Fact]
-    public void MessageIsPublishedToCorrectLocation()
+    [Test]
+    public async Task MessageIsPublishedToCorrectLocation()
     {
         Sqs.Received().SendMessageAsync(Arg.Is<SendMessageRequest>(x => x.QueueUrl == Url));
     }

@@ -4,28 +4,28 @@ namespace JustSaying.UnitTests.Fluent;
 
 public class TopicAddressTests
 {
-    [Fact]
-    public void ParsingEmptyArnThrows()
+    [Test]
+    public async Task ParsingEmptyArnThrows()
     {
         Assert.Throws<ArgumentException>("topicArn", () => TopicAddress.FromArn(""));
     }
 
-    [Fact]
-    public void ParsingNullArnThrows()
+    [Test]
+    public async Task ParsingNullArnThrows()
     {
         Assert.Throws<ArgumentException>("topicArn", () => TopicAddress.FromArn(null));
     }
 
-    [Fact]
-    public void ValidArnCanBeParsed()
+    [Test]
+    public async Task ValidArnCanBeParsed()
     {
         var ta = TopicAddress.FromArn("arn:aws:sns:eu-west-1:111122223333:topic1");
 
-        Assert.Equal("arn:aws:sns:eu-west-1:111122223333:topic1", ta.TopicArn);
+        await Assert.That(ta.TopicArn).IsEqualTo("arn:aws:sns:eu-west-1:111122223333:topic1");
     }
 
-    [Fact]
-    public void ArnForWrongServiceThrows()
+    [Test]
+    public async Task ArnForWrongServiceThrows()
     {
         Assert.Throws<ArgumentException>("topicArn", () => TopicAddress.FromArn("arn:aws:sqs:eu-west-1:111122223333:queue1"));
     }

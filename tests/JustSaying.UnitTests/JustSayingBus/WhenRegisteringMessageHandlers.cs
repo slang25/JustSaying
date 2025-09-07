@@ -46,8 +46,8 @@ public class WhenRegisteringMessageHandlers(ITestOutputHelper outputHelper) : Gi
         await SystemUnderTest.StartAsync(cts.Token);
     }
 
-    [Fact]
-    public void HandlersAreAdded()
+    [Test]
+    public async Task HandlersAreAdded()
     {
         SystemUnderTest.MiddlewareMap.Contains(_queue.QueueName, typeof(Message)).ShouldBeTrue();
         SystemUnderTest.MiddlewareMap.Contains(_queue.QueueName, typeof(Message2)).ShouldBeTrue();

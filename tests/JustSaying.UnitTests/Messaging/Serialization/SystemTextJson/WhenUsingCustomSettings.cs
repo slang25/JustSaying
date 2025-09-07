@@ -31,14 +31,14 @@ public class WhenUsingCustomSettings : XBehaviourTest<SystemTextJsonMessageBodyS
         _jsonMessage = GetMessageInContext(_messageOut);
     }
 
-    [Fact]
-    public void MessageHasBeenCreated()
+    [Test]
+    public async Task MessageHasBeenCreated()
     {
         _messageOut.ShouldNotBeNull();
     }
 
-    [Fact]
-    public void EnumsAreNotRepresentedAsStrings()
+    [Test]
+    public async Task EnumsAreNotRepresentedAsStrings()
     {
         _jsonMessage.ShouldContain("EnumVal");
         _jsonMessage.ShouldNotContain("Two");

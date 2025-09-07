@@ -24,15 +24,15 @@ public class WhenRegisteringTheSamePublisherTwice(ITestOutputHelper outputHelper
         return Task.CompletedTask;
     }
 
-    [Fact]
-    public void NoExceptionIsThrown()
+    [Test]
+    public async Task NoExceptionIsThrown()
     {
         // Specifying failover regions mean that messages can be registered more than once.
         ThrownException.ShouldBeNull();
     }
 
-    [Fact]
-    public void AndInterrogationShowsNonDuplicatedPublishers()
+    [Test]
+    public async Task AndInterrogationShowsNonDuplicatedPublishers()
     {
         dynamic response = SystemUnderTest.Interrogate();
 

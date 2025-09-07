@@ -30,13 +30,13 @@ public class WhenMessageHandlingSucceeds : BaseSubscriptionGroupTests
         Queues.Add(sqsSource);
     }
 
-    [Fact]
-    public void ProcessingIsPassedToTheHandlerForCorrectMessage()
+    [Test]
+    public async Task ProcessingIsPassedToTheHandlerForCorrectMessage()
     {
         Handler.ReceivedMessages.ShouldContain(SetupMessage);
     }
 
-    [Fact]
+    [Test]
     public async Task AllMessagesAreClearedFromQueue()
     {
         await _queue.ReceivedAllMessages.WaitAsync(TimeSpan.FromSeconds(5));
@@ -45,8 +45,8 @@ public class WhenMessageHandlingSucceeds : BaseSubscriptionGroupTests
         await Patiently.AssertThatAsync(OutputHelper, () => _queue.DeleteMessageRequests.Count.ShouldBe(Handler.ReceivedMessages.Count));
     }
 
-    [Fact]
-    public void ReceiveMessageTimeStatsSent()
+    [Test]
+    public async Task ReceiveMessageTimeStatsSent()
     {
         var numberOfMessagesHandled = Handler.ReceivedMessages.Count;
 
@@ -54,8 +54,8 @@ public class WhenMessageHandlingSucceeds : BaseSubscriptionGroupTests
         Monitor.ReceiveMessageTimes.Count.ShouldBeGreaterThanOrEqualTo(numberOfMessagesHandled);
     }
 
-    [Fact]
-    public void ExceptionIsNotLoggedToMonitor()
+    [Test]
+    public async Task ExceptionIsNotLoggedToMonitor()
     {
         Monitor.HandledExceptions.ShouldBeEmpty();
     }

@@ -7,8 +7,8 @@ public class DefaultNamingConventionsTests
 {
     private readonly DefaultNamingConventions Sut = new();
 
-    [Fact]
-    public void WhenGeneratingTopicName_ForNonGenericType_ThenTheCorrectNameShouldBeReturned()
+    [Test]
+    public async Task WhenGeneratingTopicName_ForNonGenericType_ThenTheCorrectNameShouldBeReturned()
     {
         // Arrange + Act
         var result = Sut.TopicName<SimpleMessage>();
@@ -17,8 +17,8 @@ public class DefaultNamingConventionsTests
         result.ShouldBe("simplemessage");
     }
 
-    [Fact]
-    public void WhenGeneratingTopicName_ForGenericType_ThenTheCorrectNameShouldBeReturned()
+    [Test]
+    public async Task WhenGeneratingTopicName_ForGenericType_ThenTheCorrectNameShouldBeReturned()
     {
         // Arrange + Act
         var result = Sut.TopicName<List<List<string>>>();
@@ -27,8 +27,8 @@ public class DefaultNamingConventionsTests
         result.ShouldBe("listliststring");
     }
 
-    [Fact]
-    public void WhenGeneratingTopicName_ForTypeWithLongName_ThenTheLengthShouldBe256()
+    [Test]
+    public async Task WhenGeneratingTopicName_ForTypeWithLongName_ThenTheLengthShouldBe256()
     {
         // Arrange + Act
         var result = Sut
@@ -41,8 +41,8 @@ public class DefaultNamingConventionsTests
         result.Length.ShouldBe(256);
     }
 
-    [Fact]
-    public void WhenGeneratingQueueName_ForNonGenericType_ThenTheCorrectNameShouldBeReturned()
+    [Test]
+    public async Task WhenGeneratingQueueName_ForNonGenericType_ThenTheCorrectNameShouldBeReturned()
     {
         // Arrange + Act
         var result = Sut.QueueName<SimpleMessage>();
@@ -51,8 +51,8 @@ public class DefaultNamingConventionsTests
         result.ShouldBe("simplemessage");
     }
 
-    [Fact]
-    public void WhenGeneratingQueueName_ForGenericType_ThenTheCorrectNameShouldBeReturned()
+    [Test]
+    public async Task WhenGeneratingQueueName_ForGenericType_ThenTheCorrectNameShouldBeReturned()
     {
         // Arrange + Act
         var result = Sut.QueueName<List<string>>();
@@ -61,8 +61,8 @@ public class DefaultNamingConventionsTests
         result.ShouldBe("liststring");
     }
 
-    [Fact]
-    public void WhenGeneratingQueueName_ForTypeWithLongName_ThenTheLengthShouldBe80()
+    [Test]
+    public async Task WhenGeneratingQueueName_ForTypeWithLongName_ThenTheLengthShouldBe80()
     {
         // Arrange + Act
         var result =

@@ -45,20 +45,20 @@ public class WhenApplyingTags : WhenSnsTopicTestBase
         await SystemUnderTest.ApplyTagsAsync(CancellationToken.None);
     }
 
-    [Fact]
-    public void TagResourceRequestIsIssued()
+    [Test]
+    public async Task TagResourceRequestIsIssued()
     {
         Sns.Received(1).TagResourceAsync(Arg.Any<TagResourceRequest>());
     }
 
-    [Fact]
-    public void TheCorrectTopicArnIsUsed()
+    [Test]
+    public async Task TheCorrectTopicArnIsUsed()
     {
         _actualCreateRequest.ResourceArn.ShouldBe(TopicArn);
     }
 
-    [Fact]
-    public void TheTagsAreBuiltCorrectly()
+    [Test]
+    public async Task TheTagsAreBuiltCorrectly()
     {
         foreach (var (key, value) in _tags)
         {

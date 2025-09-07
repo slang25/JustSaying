@@ -70,7 +70,7 @@ public class WhenSubscriberIsSlow
         return messagesProcessed;
     }
 
-    [Fact]
+    [Test]
     public async Task All_Messages_Are_Processed()
     {
         using var cts = new CancellationTokenSource();

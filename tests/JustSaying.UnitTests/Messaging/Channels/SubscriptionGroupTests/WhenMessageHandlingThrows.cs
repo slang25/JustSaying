@@ -42,13 +42,13 @@ public class WhenMessageHandlingThrows : BaseSubscriptionGroupTests
         return await base.UntilAsync();
     }
 
-    [Fact]
-    public void MessageHandlerWasCalled()
+    [Test]
+    public async Task MessageHandlerWasCalled()
     {
         Handler.ReceivedMessages.Any(msg => msg.GetType() == typeof(SimpleMessage)).ShouldBeTrue();
     }
 
-    [Fact]
+    [Test]
     public async Task FailedMessageIsNotRemovedFromQueue()
     {
         await Patiently.AssertThatAsync(() =>
@@ -63,8 +63,8 @@ public class WhenMessageHandlingThrows : BaseSubscriptionGroupTests
         });
     }
 
-    [Fact]
-    public void ExceptionIsLoggedToMonitor()
+    [Test]
+    public async Task ExceptionIsLoggedToMonitor()
     {
         Monitor.HandledExceptions.ShouldNotBeEmpty();
     }

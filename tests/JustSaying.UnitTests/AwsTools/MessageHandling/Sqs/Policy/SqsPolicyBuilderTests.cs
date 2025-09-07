@@ -5,8 +5,8 @@ namespace JustSaying.UnitTests.AwsTools.MessageHandling.Sqs.Policy;
 
 public class SqsPolicyBuilderTests
 {
-    [Fact]
-    public void ShouldGenerateApprovedIamPolicy()
+    [Test]
+    public async Task ShouldGenerateApprovedIamPolicy()
     {
         // arrange
         var sqsPolicyDetails = new SqsPolicyDetails
@@ -27,8 +27,8 @@ public class SqsPolicyBuilderTests
         });
     }
 
-    [Fact]
-    public void ShouldGenerateApprovedIamPolicyWithWildcardFromEmptySourceArn()
+    [Test]
+    public async Task ShouldGenerateApprovedIamPolicyWithWildcardFromEmptySourceArn()
     {
         // arrange
         var sqsPolicyDetails = new SqsPolicyDetails

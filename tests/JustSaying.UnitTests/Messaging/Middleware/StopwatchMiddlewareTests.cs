@@ -30,7 +30,7 @@ public class StopwatchMiddlewareTests
             .Build();
     }
 
-    [Fact]
+    [Test]
     public async Task WhenMiddlewareIsWrappedinStopWatch_InnerMiddlewareIsCalled()
     {
         var context = TestHandleContexts.From<OrderAccepted>();
@@ -41,7 +41,7 @@ public class StopwatchMiddlewareTests
         _handler.ReceivedMessages.ShouldHaveSingleItem().ShouldBeOfType<OrderAccepted>();
     }
 
-    [Fact]
+    [Test]
     public async Task WhenMiddlewareIsWrappedinStopWatch_MonitoringIsCalled()
     {
         var context = TestHandleContexts.From<OrderAccepted>();

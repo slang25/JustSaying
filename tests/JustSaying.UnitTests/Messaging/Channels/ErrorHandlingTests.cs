@@ -29,7 +29,7 @@ public class ErrorHandlingTests
         MessageMonitor = new TrackingLoggingMonitor(LoggerFactory.CreateLogger<TrackingLoggingMonitor>());
     }
 
-    [Fact]
+    [Test]
     public async Task Sqs_Client_Throwing_Exceptions_Continues_To_Request_Messages()
     {
         // Arrange
@@ -86,7 +86,7 @@ public class ErrorHandlingTests
         await runTask.HandleCancellation();
     }
 
-    [Fact]
+    [Test]
     public async Task Message_Processing_Throwing_Exceptions_Continues_To_Request_Messages()
     {
         // Arrange

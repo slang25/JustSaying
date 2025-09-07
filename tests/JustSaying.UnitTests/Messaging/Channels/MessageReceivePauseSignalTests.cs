@@ -4,18 +4,18 @@ namespace JustSaying.UnitTests.Messaging.Channels;
 
 public class MessageReceivePauseSignalTests
 {
-    [Fact]
-    public void WhenInitialized_ReturnsIsPausedFalse()
+    [Test]
+    public async Task WhenInitialized_ReturnsIsPausedFalse()
     {
         var messageReceivePauseSignal = new MessageReceivePauseSignal();
 
         var result = messageReceivePauseSignal.IsPaused;
 
-        Assert.False(result);
+        await Assert.That(result).IsFalse();
     }
 
-    [Fact]
-    public void WhenPaused_ReturnsIsPaused()
+    [Test]
+    public async Task WhenPaused_ReturnsIsPaused()
     {
         var messageReceivePauseSignal = new MessageReceivePauseSignal();
 
@@ -23,11 +23,11 @@ public class MessageReceivePauseSignalTests
 
         var result = messageReceivePauseSignal.IsPaused;
 
-        Assert.True(result);
+        await Assert.That(result).IsTrue();
     }
 
-    [Fact]
-    public void WhenStarted_ReturnsIsPausedFalse()
+    [Test]
+    public async Task WhenStarted_ReturnsIsPausedFalse()
     {
         var messageReceivePauseSignal = new MessageReceivePauseSignal();
 
@@ -35,6 +35,6 @@ public class MessageReceivePauseSignalTests
 
         var result = messageReceivePauseSignal.IsPaused;
 
-        Assert.False(result);
+        await Assert.That(result).IsFalse();
     }
 }

@@ -9,7 +9,7 @@ public class MergingMultiplexerTests(ITestOutputHelper outputHelper)
 {
     private static readonly TimeSpan TimeoutPeriod = TimeSpan.FromMilliseconds(50);
 
-    [Fact]
+    [Test]
     public async Task Starting_Twice_Returns_Same_Task()
     {
         // Arrange
@@ -22,7 +22,7 @@ public class MergingMultiplexerTests(ITestOutputHelper outputHelper)
         Task completed2 = multiplexer.RunAsync(cts.Token);
 
         // Assert
-        Assert.Equal(completed1, completed2);
+        await Assert.That(completed2).IsEqualTo(completed1);
 
         cts.Cancel();
         try
@@ -35,8 +35,8 @@ public class MergingMultiplexerTests(ITestOutputHelper outputHelper)
         }
     }
 
-    [Fact]
-    public void Cannot_Add_Invalid_Reader()
+    [Test]
+    public async Task Cannot_Add_Invalid_Reader()
     {
         // Arrange
         using var multiplexer = new MergingMultiplexer(10, outputHelper.ToLogger<MergingMultiplexer>());
@@ -45,7 +45,7 @@ public class MergingMultiplexerTests(ITestOutputHelper outputHelper)
         Assert.Throws<ArgumentNullException>(() => multiplexer.ReadFrom(null));
     }
 
-    [Fact]
+    [Test]
     public async Task Cannot_Get_Messages_Before_Started()
     {
         // Arrange
@@ -55,7 +55,7 @@ public class MergingMultiplexerTests(ITestOutputHelper outputHelper)
         await Assert.ThrowsAsync<InvalidOperationException>(() => ReadAllMessages(multiplexer));
     }
 
-    [Fact]
+    [Test]
     public async Task When_Reader_Does_Not_Complete_Readers_Not_Completed()
     {
         // Arrange
@@ -77,12 +77,12 @@ public class MergingMultiplexerTests(ITestOutputHelper outputHelper)
         // Assert
         var delay = Task.Delay(TimeoutPeriod);
         var completedTask = await Task.WhenAny(multiplexerRunTask, delay);
-        Assert.Equal(delay, completedTask);
+        await Assert.That(completedTask).IsEqualTo(delay);
 
         cts.Cancel();
     }
 
-    [Fact]
+    [Test]
     public async Task When_Reader_Completes_When_All_Readers_Completed()
     {
         // Arrange

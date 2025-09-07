@@ -6,17 +6,17 @@ namespace JustSaying.UnitTests.Messaging.Compression
     {
         private readonly GzipMessageBodyCompression _compression = new();
 
-        [Fact]
-        public void ContentEncoding_ShouldReturnGzipBase64()
+        [Test]
+        public async Task ContentEncoding_ShouldReturnGzipBase64()
         {
-            Assert.Equal(ContentEncodings.GzipBase64, _compression.ContentEncoding);
+            await Assert.That(_compression.ContentEncoding).IsEqualTo(ContentEncodings.GzipBase64);
         }
 
-        [Theory]
-        [InlineData("")]
-        [InlineData("Hello, World!")]
-        [InlineData("This is a longer string with some special characters: !@#$%^&*()_+")]
-        public void Compress_ThenDecompress_ShouldReturnOriginalString(string original)
+        [Test]
+        [Arguments("")]
+        [Arguments("Hello, World!")]
+        [Arguments("This is a longer string with some special characters: !@#$%^&*()_+")]
+        public async Task Compress_ThenDecompress_ShouldReturnOriginalString(string original)
         {
             // Arrange
 
@@ -25,11 +25,11 @@ namespace JustSaying.UnitTests.Messaging.Compression
             string decompressed = _compression.Decompress(compressed);
 
             // Assert
-            Assert.Equal(original, decompressed);
+            await Assert.That(decompressed).IsEqualTo(original);
         }
 
-        [Fact]
-        public void Compress_ShouldReturnBase64EncodedString()
+        [Test]
+        public async Task Compress_ShouldReturnBase64EncodedString()
         {
             // Arrange
             string input = "Test string";
@@ -38,21 +38,21 @@ namespace JustSaying.UnitTests.Messaging.Compression
             string compressed = _compression.Compress(input);
 
             // Assert
-            Assert.True(IsBase64String(compressed));
+            await Assert.That(IsBase64String(compressed)).IsTrue();
         }
 
-        [Fact]
-        public void Decompress_WithInvalidBase64_ShouldThrowFormatException()
+        [Test]
+        public async Task Decompress_WithInvalidBase64_ShouldThrowFormatException()
         {
             // Arrange
             string invalidBase64 = "This is not a valid Base64 string";
 
             // Act & Assert
-            Assert.Throws<FormatException>(() => _compression.Decompress(invalidBase64));
+            await Assert.That(() => _compression.Decompress(invalidBase64)).Throws<FormatException>();
         }
 
-        [Fact]
-        public void Compress_WithLargeString_ShouldCompressSuccessfully()
+        [Test]
+        public async Task Compress_WithLargeString_ShouldCompressSuccessfully()
         {
             // Arrange
             string largeString = new string('A', 1_000_000);
@@ -62,7 +62,7 @@ namespace JustSaying.UnitTests.Messaging.Compression
             string decompressed = _compression.Decompress(compressed);
 
             // Assert
-            Assert.Equal(largeString, decompressed);
+            await Assert.That(decompressed).IsEqualTo(largeString);
         }
 
         private bool IsBase64String(string base64)

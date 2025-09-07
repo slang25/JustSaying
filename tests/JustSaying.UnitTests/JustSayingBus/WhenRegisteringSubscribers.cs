@@ -59,7 +59,7 @@ public sealed class WhenRegisteringSubscribers(ITestOutputHelper outputHelper) :
         await SystemUnderTest.StartAsync(_cts.Token);
     }
 
-    [Fact]
+    [Test]
     public async Task SubscribersStartedUp()
     {
         await Patiently.AssertThatAsync(OutputHelper,
@@ -70,8 +70,8 @@ public sealed class WhenRegisteringSubscribers(ITestOutputHelper outputHelper) :
             });
     }
 
-    [Fact]
-    public void AndInterrogationShowsSubscribersHaveBeenSet()
+    [Test]
+    public async Task AndInterrogationShowsSubscribersHaveBeenSet()
     {
         dynamic response = SystemUnderTest.Interrogate();
 

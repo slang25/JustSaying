@@ -44,8 +44,8 @@ public class WhenPublishingInBatchDelayedMessage : WhenPublishingTestBase
         await SystemUnderTest.PublishAsync(_messages, _metadata);
     }
 
-    [Fact]
-    public void MessageIsPublishedWithDelaySecondsPropertySet()
+    [Test]
+    public async Task MessageIsPublishedWithDelaySecondsPropertySet()
     {
         Sqs.Received().SendMessageBatchAsync(Arg.Is<SendMessageBatchRequest>(x => x.Entries
             .All(y => y.DelaySeconds.Equals(1))));

@@ -5,16 +5,16 @@ namespace JustSaying.UnitTests.AwsTools.MessageHandling;
 
 public class MessageContextAccessorTests
 {
-    [Fact]
-    public void ContextIsNullByDefault()
+    [Test]
+    public async Task ContextIsNullByDefault()
     {
         var accessor = MakeAccessor();
 
-        Assert.Null(accessor.MessageContext);
+        await Assert.That(accessor.MessageContext).IsNull();
     }
 
-    [Fact]
-    public void CanStoreAndRetrieveContext()
+    [Test]
+    public async Task CanStoreAndRetrieveContext()
     {
         var data = MakeUniqueMessageContext();
         var accessor = MakeAccessor();
@@ -25,7 +25,7 @@ public class MessageContextAccessorTests
         AssertSame(data, readData);
     }
 
-    [Fact]
+    [Test]
     public async Task CanStoreAndRetrieveAsync()
     {
         var data = MakeUniqueMessageContext();
@@ -37,7 +37,7 @@ public class MessageContextAccessorTests
         AssertSame(data, accessor.MessageContext);
     }
 
-    [Fact]
+    [Test]
     public async Task DifferentThreadsHaveDifferentContexts()
     {
         var data1 = MakeUniqueMessageContext();
@@ -49,7 +49,7 @@ public class MessageContextAccessorTests
         await Task.WhenAll(t1, t2);
     }
 
-    [Fact]
+    [Test]
     public async Task MultiThreads()
     {
         var tasks = new List<Task>();
@@ -64,7 +64,7 @@ public class MessageContextAccessorTests
         await Task.WhenAll(tasks);
     }
 
-    [Fact]
+    [Test]
     public async Task ThreadContextDoesNotEscape()
     {
         var data1 = MakeUniqueMessageContext();
@@ -72,11 +72,11 @@ public class MessageContextAccessorTests
         var t1 = Task.Run(async () => await ThreadLocalDataRemainsTheSame(data1));
 
         var accessor = MakeAccessor();
-        Assert.Null(accessor.MessageContext);
+        await Assert.That(accessor.MessageContext).IsNull();
 
         await t1;
 
-        Assert.Null(accessor.MessageContext);
+        await Assert.That(accessor.MessageContext).IsNull();
     }
 
     private static async Task ThreadLocalDataRemainsTheSame(MessageContext data)
@@ -96,13 +96,13 @@ public class MessageContextAccessorTests
 
     private static void AssertSame(MessageContext expected, MessageContext actual)
     {
-        Assert.NotNull(expected);
-        Assert.NotNull(actual);
+        await Assert.That(expected).IsNotNull();
+        await Assert.That(actual).IsNotNull();
 
-        Assert.Equal(expected, actual);
-        Assert.Equal(expected.Message, actual.Message);
-        Assert.Equal(expected.Message.Body, actual.Message.Body);
-        Assert.Equal(expected.QueueUri, actual.QueueUri);
+        await Assert.That(actual).IsEqualTo(expected);
+        await Assert.That(actual.Message).IsEqualTo(expected.Message);
+        await Assert.That(actual.Message.Body).IsEqualTo(expected.Message.Body);
+        await Assert.That(actual.QueueUri).IsEqualTo(expected.QueueUri);
     }
 
     private static MessageContext MakeUniqueMessageContext()

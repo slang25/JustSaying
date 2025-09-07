@@ -71,8 +71,8 @@ public class WhenListeningWithMultipleGroups : BaseSubscriptionGroupTests
         Queues.Add(_queueB);
     }
 
-    [Fact]
-    public void SubscriptionGroups_OverridesDefaultSettingsCorrectly()
+    [Test]
+    public async Task SubscriptionGroups_OverridesDefaultSettingsCorrectly()
     {
         var interrogationResult = SystemUnderTest.Interrogate();
 

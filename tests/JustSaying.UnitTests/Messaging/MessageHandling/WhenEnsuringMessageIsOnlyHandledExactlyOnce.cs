@@ -11,7 +11,7 @@ namespace JustSaying.UnitTests.Messaging.MessageHandling;
 
 public class WhenEnsuringMessageIsOnlyHandledExactlyOnce(ITestOutputHelper outputHelper)
 {
-    [Fact]
+    [Test]
     public async Task WhenMessageIsLockedByAnotherHandler_MessageWillBeLeftInTheQueue()
     {
         var messageLock = new FakeMessageLock(false);

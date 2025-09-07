@@ -19,14 +19,14 @@ public class WhenPublishingMessages(ITestOutputHelper outputHelper) : GivenAServ
         await SystemUnderTest.PublishAsync(new SimpleMessage());
     }
 
-    [Fact]
-    public void PublisherIsCalledToPublish()
+    [Test]
+    public async Task PublisherIsCalledToPublish()
     {
         _publisher.Received().PublishAsync(Arg.Any<Message>(),
             Arg.Any<PublishMetadata>(), Arg.Any<CancellationToken>());
     }
-    [Fact]
-    public void PublishMessageTimeStatsSent()
+    [Test]
+    public async Task PublishMessageTimeStatsSent()
     {
         Monitor.PublishMessageTimes.ShouldHaveSingleItem();
     }

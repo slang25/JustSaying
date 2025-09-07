@@ -22,14 +22,14 @@ public class DealingWithPotentiallyMissingConversation : XBehaviourTest<Newtonso
         _messageIn = SystemUnderTest.Deserialize(_jsonMessage) as MessageWithEnum;
     }
 
-    [Fact]
-    public void ItDoesNotHaveConversationPropertySerializedBecauseItIsNotSet_ThisIsForBackwardsCompatibilityWhenWeDeploy()
+    [Test]
+    public async Task ItDoesNotHaveConversationPropertySerializedBecauseItIsNotSet_ThisIsForBackwardsCompatibilityWhenWeDeploy()
     {
         _jsonMessage.ShouldNotContain("Conversation");
     }
 
-    [Fact]
-    public void DeserializedMessageHasEmptyConversation_ThisIsForBackwardsCompatibilityWhenWeDeploy()
+    [Test]
+    public async Task DeserializedMessageHasEmptyConversation_ThisIsForBackwardsCompatibilityWhenWeDeploy()
     {
         _messageIn.Conversation.ShouldBeNull();
     }

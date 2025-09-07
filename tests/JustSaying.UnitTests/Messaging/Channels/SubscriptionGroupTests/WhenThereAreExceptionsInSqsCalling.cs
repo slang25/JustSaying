@@ -34,8 +34,8 @@ public class WhenThereAreExceptionsInSqsCalling(ITestOutputHelper testOutputHelp
         return Task.FromResult(_callCount > 1);
     }
 
-    [Fact]
-    public void QueueIsPolledMoreThanOnce()
+    [Test]
+    public async Task QueueIsPolledMoreThanOnce()
     {
         _callCount.ShouldBeGreaterThan(1);
     }

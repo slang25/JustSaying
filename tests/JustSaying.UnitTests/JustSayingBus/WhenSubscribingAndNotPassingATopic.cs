@@ -14,8 +14,8 @@ public class WhenSubscribingAndNotPassingATopic(ITestOutputHelper outputHelper) 
         return Task.CompletedTask;
     }
 
-    [Fact]
-    public void ArgExceptionThrown()
+    [Test]
+    public async Task ArgExceptionThrown()
     {
         ((ArgumentException)ThrownException).ParamName.ShouldBe("queue");
     }

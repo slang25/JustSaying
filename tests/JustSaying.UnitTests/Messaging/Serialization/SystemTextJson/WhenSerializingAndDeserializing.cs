@@ -25,22 +25,22 @@ public class WhenSerializingAndDeserializing : XBehaviourTest<SystemTextJsonMess
         _messageIn = SystemUnderTest.Deserialize(_jsonMessage) as MessageWithEnum;
     }
 
-    [Fact]
-    public void MessageHasBeenCreated()
+    [Test]
+    public async Task MessageHasBeenCreated()
     {
         _messageOut.ShouldNotBeNull();
     }
 
-    [Fact]
-    public void MessagesContainSameDetails()
+    [Test]
+    public async Task MessagesContainSameDetails()
     {
         _messageOut.EnumVal.ShouldBe(_messageIn.EnumVal);
         _messageOut.RaisingComponent.ShouldBe(_messageIn.RaisingComponent);
         _messageOut.TimeStamp.ShouldBe(_messageIn.TimeStamp);
     }
 
-    [Fact]
-    public void EnumsAreRepresentedAsStrings()
+    [Test]
+    public async Task EnumsAreRepresentedAsStrings()
     {
         _jsonMessage.ShouldContain("EnumVal");
         _jsonMessage.ShouldContain("Two");

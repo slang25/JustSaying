@@ -39,8 +39,8 @@ public class WhenPublishingDelayedMessageAsync : WhenPublishingTestBase
         await SystemUnderTest.PublishAsync(_message, _metadata);
     }
 
-    [Fact]
-    public void MessageIsPublishedWithDelaySecondsPropertySet()
+    [Test]
+    public async Task MessageIsPublishedWithDelaySecondsPropertySet()
     {
         Sqs.Received().SendMessageAsync(Arg.Is<SendMessageRequest>(x => x.DelaySeconds.Equals(1)));
     }

@@ -6,8 +6,8 @@ namespace JustSaying.UnitTests.Fluent;
 
 public class CompressionEncodingValidatorTests
 {
-    [Fact]
-    public void ValidateEncoding_WithNullCompressionOptions_DoesNotThrow()
+    [Test]
+    public async Task ValidateEncoding_WithNullCompressionOptions_DoesNotThrow()
     {
         // Arrange
         var registry = new MessageCompressionRegistry();
@@ -16,8 +16,8 @@ public class CompressionEncodingValidatorTests
         CompressionEncodingValidator.ValidateEncoding(registry, null);
     }
 
-    [Fact]
-    public void ValidateEncoding_WithNullCompressionEncoding_DoesNotThrow()
+    [Test]
+    public async Task ValidateEncoding_WithNullCompressionEncoding_DoesNotThrow()
     {
         // Arrange
         var registry = new MessageCompressionRegistry();
@@ -27,8 +27,8 @@ public class CompressionEncodingValidatorTests
         CompressionEncodingValidator.ValidateEncoding(registry, options);
     }
 
-    [Fact]
-    public void ValidateEncoding_WithRegisteredEncoding_DoesNotThrow()
+    [Test]
+    public async Task ValidateEncoding_WithRegisteredEncoding_DoesNotThrow()
     {
         // Arrange
         var gzipCompression = new GzipMessageBodyCompression();
@@ -39,8 +39,8 @@ public class CompressionEncodingValidatorTests
         CompressionEncodingValidator.ValidateEncoding(registry, options);
     }
 
-    [Fact]
-    public void ValidateEncoding_WithUnregisteredEncoding_ThrowsInvalidOperationException()
+    [Test]
+    public async Task ValidateEncoding_WithUnregisteredEncoding_ThrowsInvalidOperationException()
     {
         // Arrange
         var registry = new MessageCompressionRegistry();
@@ -50,6 +50,6 @@ public class CompressionEncodingValidatorTests
         var exception = Assert.Throws<InvalidOperationException>(() =>
             CompressionEncodingValidator.ValidateEncoding(registry, options));
 
-        Assert.Equal("Compression encoding 'unknown' is not registered with the bus.", exception.Message);
+        await Assert.That(exception.Message).IsEqualTo("Compression encoding 'unknown' is not registered with the bus.");
     }
 }

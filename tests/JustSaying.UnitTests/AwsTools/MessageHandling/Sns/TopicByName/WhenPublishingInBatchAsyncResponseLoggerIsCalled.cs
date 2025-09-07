@@ -79,29 +79,29 @@ public class WhenPublishingInBatchAsyncResultLoggerIsCalled : WhenPublishingTest
         return Task.FromResult(response);
     }
 
-    [Fact]
-    public void ResponseLoggerIsCalled()
+    [Test]
+    public async Task ResponseLoggerIsCalled()
     {
         _response.ShouldNotBeNull();
     }
 
-    [Fact]
-    public void ResponseIsForwardedToResponseLogger()
+    [Test]
+    public async Task ResponseIsForwardedToResponseLogger()
     {
         _response.SuccessfulMessageIds.ShouldBe(_messageIds);
         _response.HttpStatusCode.ShouldBe(HttpStatusCode.OK);
     }
 
-    [Fact]
-    public void ResponseShouldContainMetadata()
+    [Test]
+    public async Task ResponseShouldContainMetadata()
     {
         _response.ResponseMetadata.ShouldNotBeNull();
         _response.ResponseMetadata.RequestId.ShouldNotBeNull();
         _response.ResponseMetadata.RequestId.ShouldBe(RequestId);
     }
 
-    [Fact]
-    public void MessageIsForwardedToResponseLogger()
+    [Test]
+    public async Task MessageIsForwardedToResponseLogger()
     {
         _messages.ShouldNotBeNull();
     }

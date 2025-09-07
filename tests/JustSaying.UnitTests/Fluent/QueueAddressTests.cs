@@ -4,71 +4,71 @@ namespace JustSaying.UnitTests.Fluent;
 
 public class QueueAddressTests
 {
-    [Fact]
-    public void ParsingEmptyArnThrows()
+    [Test]
+    public async Task ParsingEmptyArnThrows()
     {
         Assert.Throws<ArgumentException>("queueArn",() => QueueAddress.FromArn(""));
     }
 
-    [Fact]
-    public void ParsingNullArnThrows()
+    [Test]
+    public async Task ParsingNullArnThrows()
     {
         Assert.Throws<ArgumentException>("queueArn", () => QueueAddress.FromArn(null));
     }
 
-    [Fact]
-    public void ValidArnCanBeParsed()
+    [Test]
+    public async Task ValidArnCanBeParsed()
     {
         var qa = QueueAddress.FromArn("arn:aws:sqs:eu-west-1:111122223333:queue1");
 
-        Assert.Equal("https://sqs.eu-west-1.amazonaws.com/111122223333/queue1", qa.QueueUrl.AbsoluteUri);
-        Assert.Equal("eu-west-1", qa.RegionName);
+        await Assert.That(qa.QueueUrl.AbsoluteUri).IsEqualTo("https://sqs.eu-west-1.amazonaws.com/111122223333/queue1");
+        await Assert.That(qa.RegionName).IsEqualTo("eu-west-1");
     }
 
-    [Fact]
-    public void ArnForWrongServiceThrows()
+    [Test]
+    public async Task ArnForWrongServiceThrows()
     {
         Assert.Throws<ArgumentException>("queueArn", () => QueueAddress.FromArn("arn:aws:sns:eu-west-1:111122223333:queue1"));
     }
 
-    [Fact]
-    public void ValidUrlCanBeParsed()
+    [Test]
+    public async Task ValidUrlCanBeParsed()
     {
         var qa = QueueAddress.FromUrl("https://sqs.eu-west-1.amazonaws.com/111122223333/queue1");
 
-        Assert.Equal("https://sqs.eu-west-1.amazonaws.com/111122223333/queue1", qa.QueueUrl.AbsoluteUri);
-        Assert.Equal("eu-west-1", qa.RegionName);
+        await Assert.That(qa.QueueUrl.AbsoluteUri).IsEqualTo("https://sqs.eu-west-1.amazonaws.com/111122223333/queue1");
+        await Assert.That(qa.RegionName).IsEqualTo("eu-west-1");
     }
 
-    [Fact]
-    public void UppercaseUrlCanBeParsed()
+    [Test]
+    public async Task UppercaseUrlCanBeParsed()
     {
         var qa = QueueAddress.FromUrl("HTTPS://SQS.EU-WEST-1.AMAZONAWS.COM/111122223333/Queue1");
 
         // Queue name is case-sensitive.
-        Assert.Equal("https://sqs.eu-west-1.amazonaws.com/111122223333/Queue1", qa.QueueUrl.AbsoluteUri);
-        Assert.Equal("eu-west-1", qa.RegionName);
+        await Assert.That(qa.QueueUrl.AbsoluteUri).IsEqualTo("https://sqs.eu-west-1.amazonaws.com/111122223333/Queue1");
+        await Assert.That(qa.RegionName).IsEqualTo("eu-west-1");
     }
 
-    [Fact]
-    public void LocalStackUrlWithoutRegionHashUnknownRegion()
+    [Test]
+    public async Task LocalStackUrlWithoutRegionHashUnknownRegion()
     {
         var qa = QueueAddress.FromUrl("http://localhost:4576/111122223333/queue1");
 
-        Assert.Equal("unknown", qa.RegionName);
+        await Assert.That(qa.RegionName).IsEqualTo("unknown");
     }
 
-    [Fact]
-    public void LocalStackUrlWithRegionCanBeParsed()
+    [Test]
+    public async Task LocalStackUrlWithRegionCanBeParsed()
     {
         var qa = QueueAddress.FromUrl("http://localhost:4576/111122223333/queue1","us-east-1");
 
-        Assert.Equal("http://localhost:4576/111122223333/queue1", qa.QueueUrl.AbsoluteUri);
-        Assert.Equal("us-east-1", qa.RegionName);
+        await Assert.That(qa.QueueUrl.AbsoluteUri).IsEqualTo("http://localhost:4576/111122223333/queue1");
+        await Assert.That(qa.RegionName).IsEqualTo("us-east-1");
     }
 
-    [Fact]
-    public void EmptyUrlThrows()
+    [Test]
+    public async Task EmptyUrlThrows()
     {
         Assert.Throws<ArgumentException>("queueUrl", () => QueueAddress.FromUrl(""));
     }

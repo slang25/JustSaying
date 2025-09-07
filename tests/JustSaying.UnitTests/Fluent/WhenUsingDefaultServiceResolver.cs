@@ -11,50 +11,50 @@ public class WhenUsingDefaultServiceResolver
 {
     private readonly DefaultServiceResolver _sut = new();
 
-    [Fact]
-    public void ShouldResolveILoggerFactoryToNullLoggerFactory()
+    [Test]
+    public async Task ShouldResolveILoggerFactoryToNullLoggerFactory()
     {
         _sut.ResolveService<ILoggerFactory>().ShouldBeOfType<NullLoggerFactory>();
     }
 
-    [Fact]
-    public void ShouldResolveIAwsClientFactoryProxyToAwsClientFactoryProxy()
+    [Test]
+    public async Task ShouldResolveIAwsClientFactoryProxyToAwsClientFactoryProxy()
     {
         _sut.ResolveService<IAwsClientFactoryProxy>().ShouldBeOfType<AwsClientFactoryProxy>();
     }
 
-    [Fact]
-    public void ShouldResolveIHandlerResolverAsNull()
+    [Test]
+    public async Task ShouldResolveIHandlerResolverAsNull()
     {
         _sut.ResolveOptionalService<IHandlerResolver>().ShouldBeNull();
     }
 
-    [Fact]
-    public void ShouldResolveIMessagingConfigToMessagingConfig()
+    [Test]
+    public async Task ShouldResolveIMessagingConfigToMessagingConfig()
     {
         _sut.ResolveService<IMessagingConfig>().ShouldBeOfType<MessagingConfig>();
     }
 
-    [Fact]
-    public void ShouldResolveIMessageSerializationFactoryToNewtonsoftSerializationFactory()
+    [Test]
+    public async Task ShouldResolveIMessageSerializationFactoryToNewtonsoftSerializationFactory()
     {
         _sut.ResolveService<IMessageBodySerializationFactory>().ShouldBeOfType<NewtonsoftSerializationFactory>();
     }
 
-    [Fact]
-    public void ShouldResolveIMessageSubjectProviderToNonGenericMessageSubjectProvider()
+    [Test]
+    public async Task ShouldResolveIMessageSubjectProviderToNonGenericMessageSubjectProvider()
     {
         _sut.ResolveService<IMessageSubjectProvider>().ShouldBeOfType<NonGenericMessageSubjectProvider>();
     }
 
-    [Fact]
-    public void ShouldResolveITopicNamingConventionToDefaultNamingConvention()
+    [Test]
+    public async Task ShouldResolveITopicNamingConventionToDefaultNamingConvention()
     {
         _sut.ResolveService<ITopicNamingConvention>().ShouldBeOfType<DefaultNamingConventions>();
     }
 
-    [Fact]
-    public void ShouldResolveIQueueNamingConventionToDefaultNamingConvention()
+    [Test]
+    public async Task ShouldResolveIQueueNamingConventionToDefaultNamingConvention()
     {
         _sut.ResolveService<IQueueNamingConvention>().ShouldBeOfType<DefaultNamingConventions>();
     }

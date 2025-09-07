@@ -15,7 +15,7 @@ using HandleMessageMiddleware = JustSaying.Messaging.Middleware.MiddlewareBase<J
 
 namespace JustSaying.UnitTests.Messaging.Channels.SubscriptionGroupTests;
 
-public abstract class BaseSubscriptionGroupTests : IAsyncLifetime
+public abstract class BaseSubscriptionGroupTests
 {
     protected IList<SqsSource> Queues;
     protected MiddlewareMap MiddlewareMap;
@@ -40,7 +40,8 @@ public abstract class BaseSubscriptionGroupTests : IAsyncLifetime
         Logger = LoggerFactory.CreateLogger(GetType());
     }
 
-    public async ValueTask InitializeAsync()
+    [OneTimeSetUp]
+    public async Task InitializeAsync()
     {
         GivenInternal();
 

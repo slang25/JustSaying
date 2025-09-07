@@ -8,24 +8,24 @@ public class WhenUsingTopicPublicationBuilder
 {
     private readonly TopicPublicationBuilder<Order> _sut = new();
 
-    [Theory]
-    [InlineData("")]
-    [InlineData(null)]
+    [Test]
+    [Arguments("")]
+    [Arguments(null)]
     public void ShouldThrowArgumentExceptionWhenAddingInvalidTag(string actualTagKey)
     {
         // Act + Assert
         Should.Throw<ArgumentException>(() => _sut.WithTag(actualTagKey));
     }
 
-    [Fact]
-    public void ShouldThrowArgumentExceptionWhenWriteConfigurationBuilderIsNull()
+    [Test]
+    public async Task ShouldThrowArgumentExceptionWhenWriteConfigurationBuilderIsNull()
     {
         // Act + Assert
         Should.Throw<ArgumentNullException>(() => _sut.WithWriteConfiguration((Action<SnsWriteConfigurationBuilder>) null));
     }
 
-    [Fact]
-    public void ShouldThrowArgumentExceptionWhenWriteConfigurationIsNull()
+    [Test]
+    public async Task ShouldThrowArgumentExceptionWhenWriteConfigurationIsNull()
     {
         // Act + Assert
         Should.Throw<ArgumentNullException>(() => _sut.WithWriteConfiguration((Action<SnsWriteConfiguration>) null));
